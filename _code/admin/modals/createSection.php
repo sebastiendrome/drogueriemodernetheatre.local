@@ -15,10 +15,10 @@ if(isset($_GET['parents']) && !empty($_GET['parents']) ){
 	<a href="javascript:;" class="closeBut">&times;</a>
 	<h3 class="first below"><?php echo $ui['sectionName']; ?>:</h3>
 	<form name="createSectionForm" action="" method="post" onsubmit="if($(this).find('input#createSection').val()==''){return false;}">
-		<?php echo $ui['sectionNameDescription']; ?>
+		<span class="l2"><?php echo $ui['sectionNameDescription']; ?></span>
 		<input type="hidden" name="parents" value="<?php echo $parents; ?>">
-		<input type="text" name="createSection" id="createSection" maxlength="100" value="" style="width:97%; border-left:7px solid #000;" placeholder="<?php echo FIRST_LANG; ?>, <?php echo SECOND_LANG; ?>">
-		<p><a class="button hideModal left"><?php echo $ui['cancel']; ?></a> <button type="submit" name="createSectionSubmit" class="right"><?php echo $ui['create']; ?></button></p>
+		<input type="text" name="createSection" id="createSection" maxlength="100" value="" style="width:97%; border-left:7px solid #000; margin-bottom:15px;" placeholder="<?php if(BILINGUAL == 'yes'){echo FIRST_LANG.', '.SECOND_LANG;} ?>">
+		<a class="button hideModal left"><?php echo $ui['cancel']; ?></a> <button type="submit" name="createSectionSubmit" class="right"><?php echo $ui['create']; ?></button>
 	</form>
 </div>
 <!--

@@ -23,6 +23,7 @@ if( isset($_GET['path']) ){
 
 	<!-- upload file start -->
 	<div>
+	<h3 class="first"><?php echo $ui['newGallery']; ?></h3>
 
 	<div id="uploadFileDiv">
 

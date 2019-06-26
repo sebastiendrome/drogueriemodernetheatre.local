@@ -56,8 +56,6 @@ div.txt p:first-child, div.html p:first-child,
 div.txt h3:first-child, div.html h3:first-child, 
 div.txt h2:first-child, div.html h2:first-child, 
 div.txt h1:first-child, div.html h1:first-child {margin-top:0; padding-top:0;}
-#content div.divItem:first-child{margin-top:0; padding-top:0;}
-#content div.divItem:first-child div.title h2{margin-top:0; padding-top:0;}
 
 .title a span{font-size:smaller;}
 
@@ -88,7 +86,7 @@ div.gallNav a:hover, div.gallNav a.selected{text-decoration:none; color:#000; op
 
 #mobileMenu{display:block; position:absolute; top:9px; right:18px; visibility:hidden;}
 
-.backTitle.zoomPage{left:0; padding-left:20px;}
+.backTitle.zoomPage{left:0; padding:15px;}
 
 span.question{
 	cursor:pointer;
@@ -109,6 +107,8 @@ span.tooltip{
 	border-radius:3px;
 	box-shadow:0 0 4px #fff;
 }
+
+#footer{font-size:smaller; padding:10px;}
 
 /* wysiwyg (text editor) styles */
 /*

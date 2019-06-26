@@ -49,6 +49,21 @@ if(empty($replace)){
 <?php } ?>
 	</div>
 	<!-- upload file end -->
+
+	<!--
+
+	<h3 style="text-align:center; margin:20px 0;" class="hideUp"> —— <?php echo $ui['or']; ?> —— </h3>
+
+	-->
+	<!-- select file from _uploads start -->
+
+	<!--
+	<a class="button submit left showModal" rel="chooseFromUploads?path=<?php echo $path; ?>"><?php echo $ui['fileFromUploads']; ?></a>
+	<p class="above clearBoth hideUp" style="margin-top:0;"><?php echo $ui['fileFromUpDescription']; ?>
+	</p>
+-->
+
+	<!-- select file from _uploads end -->
 	
 <?php 
 // only show the create file option if the modal is not opened from the replace button

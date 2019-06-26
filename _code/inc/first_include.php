@@ -2,11 +2,11 @@
 /******** TO DO ********
  * Try new layout: only the content scrolls, not the body/html
  * Store ALL files in _uploads and use reference-file (dummy "image.jpg") in _content, just like "1234.gal"
+ * Choose file from _uploads directory
  * Update menu: use line number systematically! (instead of complicated parents/child search)
  * caption for each gallery image
  * zoom in all images
  * all uploads results via ajax
- * choose file to insert from uploads directory
  */
 session_start();
 
@@ -42,10 +42,14 @@ if( strstr(SITE,'.local') ){ 					// local server
 require(ROOT.'_code/errors.php');
 
 
-// create _content dir if it does not exist
-/*if( !file_exists(ROOT.'_content') ){
-	mkdir(ROOT.'_content', 0766);
-}*/
+// create _uploads dir if it does not exist
+if( !file_exists(ROOT.'_content/_uploads') ){
+	mkdir(ROOT.'_content/_uploads');
+	mkdir(ROOT.'_content/_uploads/_S');
+	mkdir(ROOT.'_content/_uploads/_M');
+	mkdir(ROOT.'_content/_uploads/_L');
+	mkdir(ROOT.'_content/_uploads/_XL');
+}
 // create error reporting file  if it does not exist
 if( !file_exists(ROOT.CONTENT.'hGtDjkpPWSXk.php') ){
 	if( !$fp = fopen(ROOT.CONTENT.'hGtDjkpPWSXk.php', 'w') ){
@@ -90,6 +94,7 @@ define("SHOW_SUB_NAV", $show_sub_nav);
 define("ALLOWED_TAGS", '<b><strong><br><u><i><a><h1><h2><h3><span><div><img>');
 
 // language dependent constants (for 'more' and 'back' links)
+define("BILINGUAL", $bilingual);
 define("FIRST_LANG", $first_lang);
 define("SECOND_LANG", $second_lang);
 // language directory that will let the site know it should switch to second language.

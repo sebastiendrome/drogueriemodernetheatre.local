@@ -1,6 +1,6 @@
 /****
 * css modifications for small screens (width less than or equal to 980px)
 ****/
-#nav ul{padding:5px; margin:5px;}
+#nav ul{margin:8px;}
 #footer{padding-left:10px;}
-#nav{padding-bottom:9px;}
+#nav{padding-bottom:5px;}

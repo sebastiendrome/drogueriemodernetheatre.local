@@ -5,7 +5,7 @@ $ui = array(
     'gallery' => 'gallery',
     'titleAdmin' => 'Admin',
     'titleContent' => 'Admin',
-    'preferences' => 'preferences',
+    'preferences' => 'settings',
     'prefTitle' => 'Set the site main parameters, languages, fonts and other design options',
     'logout' => 'logout',
     'logoutTitle' => 'logout',
@@ -17,7 +17,8 @@ $ui = array(
     'sectionNameDescription' => 'In both languages, separated with a coma.',
     'sectionDelConfirm' => 'Are you sure you want to delete this section?',
     'sectionDelWarning' => 'This will delete the section and all its content',
-    'emptySection' => 'empty section',
+	'emptySection' => 'empty section',
+	'emptySecNote' => 'This section is empty... Click <i>+ new item</i> above to add content to this section.',
     'emptyGal' => 'empty gallery',
     'changeSecName' => 'change section name',
     'changeSecNameTitle' => 'change section name',
@@ -50,7 +51,17 @@ $ui = array(
     'bold' => 'bold',
     'underline' => 'underline',
     'italic' => 'italic',
-    'link' => 'link',
+	'link' => 'link',
+	'linkRemove' => 'remove link',
+	'h1' => 'Big Header text',
+	'h2' => 'Medium Header text',
+	'h3' => 'Small Header text',
+	'p' => 'Paragraph',
+	'alignLeft' => 'Align left',
+	'alignRight' => 'Align right',
+	'alignCenter' => 'Align center',
+	'justify' => 'Justify',
+	'insertImg' => 'Insert image',
     'showCode' => 'show code',
     'showCodeDescription' => 'click to show the HTML code for this file. To return to the rendered file, click here again.',
     'textAreaPlaceholder' => 'Enter or paste text ...',
@@ -80,6 +91,8 @@ $ui = array(
 	'imgSize' => 'image size',
 	'newGallery' => 'Create a Gallery',
 	'newGalDescription' => 'Create an Image Gallery',
+	'fileFromUploads' => 'Choose from my uploaded files',
+	'fileFromUpDescription' => 'Choose from the files already uploaded.',
 
 
 	/* Preferences */
@@ -139,7 +152,11 @@ $ui = array(
 	'no' => 'no',
 	'home' => 'home',
 
-    /* success/error messages */
+	/* success/error messages */
+	'wrongLogin' => 'Wrong login! Please try again.',
+	'changeUserError' => 'username must have 3 to 20 characters.<br>The new username/password have <u>not</u> been saved.',
+	'changePwdError' => 'admin password must have 5 to 20 characters.<br>The new username/password have <u>not</u> been saved.',
+	'pwdNoMatch' => 'The two admin passwords do not match!<br>The new username/password have <u>not</u> been saved.',
     'changeSaved' => 'Your changes have been saved.',
     'fileUploaded' => 'File uploaded',
     'itemDeleted' => 'The item has been deleted.',
@@ -153,7 +170,8 @@ $ui = array(
 	/* upload messages */
 	'fileTypeNotSupported' => 'This file type is not supported: <b>[%rep%]</b><br>The file has not been uploaded.',
 	'fileTooLarge' => 'Error: make sure the file is not bigger than [%rep%]!',
+	'bgSizeWarning' => 'The image size will considerably impact the loading time of your home page. <a href="http://portfolio.local/_code/inc/optimize.php?recommended_size=2000" target="_blank">See here how to optimize it better</a>.',
     
     /* Various */
-    'viewLarge' => 'view original size in new window'
+	'viewLarge' => 'view original size in new window'
 );

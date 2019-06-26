@@ -71,7 +71,7 @@ $('#structureContainer, #contentContainer').on('click', 'a.up, a.down', function
 
 
 // SHOW or HIDE section
-$('#structureContainer').on('click', 'a.show, a.hide', function(e) {
+$('#adminContainer').on('click', 'a.show, a.hide', function(e) {
 	//alert('clicked');
 	var item = $(this).closest('li').attr("data-name"); // use attr instead of data! because its value may have been changed dynamically
 	var parents = $(this).closest('ul').attr("data-parents"); // get parents name in case this is a sub-section

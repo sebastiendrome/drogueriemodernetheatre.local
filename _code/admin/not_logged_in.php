@@ -39,7 +39,7 @@ if(
 	
 // wrong login
 }elseif( isset($_SESSION['kftgrnpoiu']) ){
-	$message .= '<p style="color:red;">Wrong Login! Please try again.</p>';
+	$message .= '<p class="error">'.$ui['wrongLogin'].'</p>';
 }
 
 // form action: remove query string (for exemple ?logout)
@@ -59,23 +59,25 @@ if(!$logged_in){
 	ob_end_flush();
 	$rand = rand(0,100);
 	$login_form .= '<link href="/_code/css/common.css?v='.$rand.'" rel="stylesheet" type="text/css">';
-	$login_form .= '<link href="/_code/css/nav-left/css.css?v='.$rand.'" rel="stylesheet" type="text/css">
-	</head>
+	$login_form .= '<link href="/_code/css/admincss.css?v='.$rand.'" rel="stylesheet" type="text/css">';
+
+	$login_form .= '</head>
 	<body>
 
-	<div id="admin" style="position:absolute;width:33%;left:33%;top:10%;">
-	<div style="text-align:center;">
+	<div id="admin" style="position:absolute; width:33%; max-width:400px; min-width:200px; left:33%; top:0;">
+	<div style="padding:20px 0;">
+	<h2>'.USER.' : Admin</h2>
+	</div>
 	'.$message.'
 	<form name="l" id="l" action="'.$form_action.'" method="post">
-	'.$ui['username'].': <input type="text" style="color:#000;" autocorrect="off" autocapitalize="none" name="userName" maxlength="50" autofocus><br><br>
-	'.$ui['pwd'].': <input type="password" style="color:#000;" name="password"><br><br>
-	<input type="submit" name="login" style="color:#000;" value=" LOGIN ">
+	'.$ui['username'].': <input type="text" style="display:block; width:100%; color:#000;" autocorrect="off" autocapitalize="none" name="userName" maxlength="50" autofocus><br>
+	'.$ui['pwd'].': <input type="password" style="display:block; width:100%; color:#000;" name="password"><br>
+	<input type="submit" name="login" class="button submit right" value=" LOGIN ">
 	</form>
 
 	<noscript><p style="color:red;">JavaScript appears to be disabled on this browser.<br>
 	In order to use the admin area you must enable JavaScript in your Browser preferences.</p></noscript>
 
-	</div>
 	</div>
 
 	</body>

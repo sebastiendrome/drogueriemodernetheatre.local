@@ -26,5 +26,7 @@
 #nav ul li ul li:last-child{margin-bottom:10px;}
 
 .backTitle li{margin:6px 0; padding-right:20px;}
+#content div.divItem:first-child{margin-top:0; padding-top:0;}
+#content div.divItem:first-child div.title h2{margin-top:0; padding-top:0;}
 
-#footer{padding-left:40px; font-size:smaller;}
+#footer{padding-left:40px;}

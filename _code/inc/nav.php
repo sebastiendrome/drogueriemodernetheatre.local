@@ -94,13 +94,7 @@ if(empty(LANG_LINK)){
 		<?php 
 		echo $nav;
 		?>
-		<?php
-		// echo language links if set
-		if( isset($de_link) && isset($en_link) ){ ?>
-			<li class="lastLi l2"><a href="<?php echo $en_link; ?>"<?php echo $en_selected; ?>><?php echo $first_lang; ?></a> | <a href="<?php echo $de_link; ?>"<?php echo $de_selected; ?>><?php echo $second_lang; ?></a></li>
-		<?php
-		}
-		?>
+		<li class="lastLi l2"><a href="<?php echo $en_link; ?>"<?php echo $en_selected; ?>><?php echo $first_lang; ?></a> | <a href="<?php echo $de_link; ?>"<?php echo $de_selected; ?>><?php echo $second_lang; ?></a></li>
 	</ul>
 	<a id="mobileMenu" href="javascript:;"><img src="/_code/images/mobile-menu.svg" style="width:23px;" onerror="this.onerror=null; this.src='/_code/images/mob-nav.png'"></a>
 </div><!-- end nav -->

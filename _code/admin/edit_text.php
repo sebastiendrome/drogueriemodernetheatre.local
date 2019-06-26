@@ -130,26 +130,29 @@ require(ROOT.'_code/inc/doctype.php');
 <!-- start toolbar -->
 <div id="toolbar">
 
-<a data-wysihtml5-command="bold" title="CTRL+B"><b><?php echo $ui['bold']; ?></b></a>
-<a data-wysihtml5-command="italic" title="CTRL+i"><i><?php echo $ui['italic']; ?></i></a>
-<a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h1" title="Big Header text"><h1>H1</h1></a>
-<a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h2" title="Medium Header text"><h2>H2</h2></a>
-<a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h3" title="Small Header text"><h3>H3</h3></a>
-<a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="p" title="Paragraph">P</a>
+<a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h1" title="<?php echo $ui['h1']; ?>"><h1>H1</h1></a>
+<a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h2" title="<?php echo $ui['h2']; ?>"><h2>H2</h2></a>
+<a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h3" title="<?php echo $ui['h3']; ?>"><h3>H3</h3></a>
+
+<a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="p" title="<?php echo $ui['p']; ?>">¶</a>
+
+<a data-wysihtml5-command="bold" title="<?php echo $ui['bold']; ?> (CTRL + b)l" style="border-radius: 3px 0 0 3px;"><b>B</b></a><a data-wysihtml5-command="italic" title="<?php echo $ui['italic']; ?>" style="border-radius:0;"><i>i</i></a><a data-wysihtml5-command="underline" title="<?php echo $ui['underline']; ?>" style="border-radius: 0 3px 3px 0;"><u>U</u></a>
 
 
-<a data-wysihtml5-command="justifyLeft" title="Align left" unselectable="on" style="border-radius: 3px 0 0 3px;"><img src="/_code/admin/images/align-left.gif" style="width:13px; height:12px; vertical-align:middle;">
-</a><a data-wysihtml5-command="justifyCenter" title="Align center" unselectable="on" style="border-radius:0; margin:0 -1px;"><img src="/_code/admin/images/align-center.gif" style="width:13px; height:12px;vertical-align:middle;">
-</a><a data-wysihtml5-command="justifyRight" title="Align right" unselectable="on" style="border-radius: 0 3px 3px 0;"><img src="/_code/admin/images/align-right.gif" style="width:13px; height:12px;vertical-align:middle;">
+<a data-wysihtml5-command="justifyLeft" title="<?php echo $ui['alignLeft']; ?>" unselectable="on" style="border-radius: 3px 0 0 3px;"><img src="/_code/admin/images/align-left.gif" style="width:13px; height:12px; vertical-align:middle;">
+</a><a data-wysihtml5-command="justifyCenter" title="<?php echo $ui['alignCenter']; ?>" unselectable="on" style="border-radius:0; margin:0 -1px;"><img src="/_code/admin/images/align-center.gif" style="width:13px; height:12px;vertical-align:middle;">
+</a><a data-wysihtml5-command="justifyRight" title="<?php echo $ui['alignRight']; ?>" unselectable="on" style="border-radius: 0 3px 3px 0;"><img src="/_code/admin/images/align-right.gif" style="width:13px; height:12px;vertical-align:middle;">
 </a>
-<a data-wysihtml5-command="justifyFull" title="Justify" unselectable="on"><img src="/_code/admin/images/align-justify.gif" style="width:13px; height:12px;vertical-align:middle;">
+<a data-wysihtml5-command="justifyFull" title="<?php echo $ui['justify']; ?>" unselectable="on"><img src="/_code/admin/images/align-justify.gif" style="width:13px; height:12px;vertical-align:middle;">
 </a>
+
+<a data-wysihtml5-command="createLink" href="javascript:;" unselectable="on" class="wysihtml5-command-dialog-opened" style="border-radius: 3px 0 0 3px;" title="<?php echo $ui['link']; ?>"><?php echo $ui['link']; ?></a><a data-wysihtml5-command="removeLink" href="javascript:;" unselectable="on" class="" style="border-radius: 0 3px 3px 0; margin-left:-1px;" title="<?php echo $ui['linkRemove']; ?>"><s><?php echo $ui['link']; ?></s></a>
 
 <!-- User can define the image's src: -->
 <!--<a data-wysihtml5-command="insertImage">image</a>-->
-<a href="javascript:;" class="showModal" rel="uploadFileInsert?path=_uploads">image</a>
+<a href="javascript:;" class="showModal" rel="uploadFileInsert?path=_uploads" title="<?php echo $ui['insertImg']; ?>" style="width:12px; background-image: url(/_code/admin/images/insert-image.gif);">&nbsp;</a>
 
-<a data-wysihtml5-command="createLink" href="javascript:;" unselectable="on" class="wysihtml5-command-dialog-opened" style="border-radius: 3px 0 0 3px;"><?php echo $ui['link']; ?></a><a data-wysihtml5-command="removeLink" href="javascript:;" unselectable="on" class="" style="border-radius: 0 3px 3px 0; margin-left:-1px;"><s><?php echo $ui['link']; ?></s></a>
+
 
 <div id="workflow">
 <a data-wysihtml5-command="undo" href="javascript:;" unselectable="on" title="Undo">undo</a><a data-wysihtml5-command="redo" href="javascript:;" unselectable="on" title="Redo">redo</a><a data-wysihtml5-action="change_view" title="<?php echo $ui['showCode']; ?>" class="" onclick="if(this.className == ''){this.className = 'wysihtml5-command-active'}else{this.className = ''}"><?php echo $ui['showCode']; ?> <span class="question" title="<?php echo $ui['showCodeDescription']; ?>">?</span></a>
@@ -204,8 +207,19 @@ var editor = new wysihtml5.Editor("textarea", {
 var formmodified = 0;
 
 editor
-	/*.on("load", function() {
-		//
+	/*
+	.on("load", function() {
+		$('.wysihtml5-sandbox').contents().find('body')
+			.on('mouseenter', 'img', function(){
+				$(this).wrap('<span style="position:relative;"></span>');
+				$(this).parent('span').prepend('<span class="editImg" style="position:absolute; top:0; left:0; background-color:#fff; border:1px solid #000; padding:5px;">Hello</span>');
+
+			})
+			.on('mouseleave', 'img', function(){
+				$(this).unwrap("span");
+				$('.wysihtml5-sandbox').contents().find('span.editImg').remove();
+			});
+			
 	})
 	.on("focus", function() {
 		//
@@ -238,6 +252,7 @@ editor
 		warn();
 	})*/;
 
+
 function warn(){
 	if( !$('#editTextHeader').find('p.note.warn').length ){
 		$('#editTextHeader').append('<p class="note warn"><?php echo $ui['warnSave']; ?></p>');
@@ -265,6 +280,8 @@ if($("#textEditorForm textarea").height() < 100){
 	$("#textEditorForm textarea").css("height", 100+'px');
 }
 
+
+
 // validate url (for inserted images) 
 // and replace /_XL/ with /_L/ if found, to use Large image and not extra large.
 function validateUrl(id, e){
@@ -284,6 +301,7 @@ function validateUrl(id, e){
 
 // prevent user from leaving the page without saving his changes
 $(document).ready(function(){
+
 	window.onbeforeunload = function(e){
 		var warning = "Your changes have not been saved! Are you sure you want to leave this page?";
 		if (formmodified == 1) {

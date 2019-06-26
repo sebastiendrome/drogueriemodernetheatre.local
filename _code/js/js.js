@@ -34,25 +34,13 @@ $(window).on("load", function(){
 
 	var $nav = $('#nav');
 	var navH = $nav.outerHeight;
-	// get footer height
-	var fH = $('#footer').outerHeight();
 
 	// limit nav height (and update nH var)
 	limitNavHeight($nav, wH);
 
-	// this var will detremine where the footer stands, when content container is empty
-	var contentMinHeight = wH-fH-87;
-
-	// if viewport width is less than 980px, 
-	if (document.documentElement.clientWidth < 980) {
-		contentMinHeight = wH-fH-60;
-	}
-
 	// show/hide navigation for small screens
 	// if viewport width is less than 720px, 
 	if (document.documentElement.clientWidth < 720) {
-
-		contentMinHeight = wH-fH-100;
 		
 		$nav.on('click', function(){
 
@@ -72,9 +60,6 @@ $(window).on("load", function(){
 			});
 		});
 	}
-
-	// position footer at bottom of page even if no content
-	$('#content').css('min-height', contentMinHeight+'px');
 
 	// move '.aMore' link when mouse over '.imgMore' (for sub-sections)
 	$('div.divItem').on('mouseenter', 'a.imgMore', function(){

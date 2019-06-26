@@ -17,3 +17,16 @@ ul.structure li ul li.sub::before{margin-left:-23px;}
 /*ul.structure li a{margin-left:5px;}*/
 
 div.halfContainer{width:99.8%;}
+
+/* preferences page */
+.leftNav{position:relative; width:100%;}
+.leftNav a{border-bottom:1px solid #ccc;}
+
+a.adminLess h2:after{content:none;}
+#prefContainer{
+	margin-left:0; margin-top:0; 
+	max-height:none;
+	min-width:auto; 
+	border-left:none;
+}
+form.inner{min-width:auto;}

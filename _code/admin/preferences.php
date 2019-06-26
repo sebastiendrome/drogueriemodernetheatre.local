@@ -296,7 +296,7 @@ if(isset($_GET['verify'])){
 */
 
 
-
+// which 
 
 // Form submit validation
 if(isset($_POST['submitSitePrefs']) || isset($_POST['submitUserPrefs'])){
@@ -326,8 +326,7 @@ if(isset($_POST['submitSitePrefs']) || isset($_POST['submitUserPrefs'])){
 			$new_vals['admin_username'] = sha1($new_vals['admin_username']);
 		}else{
 			unset($new_vals['admin_username']);
-			$error .= '<p class="error">username must have 3 to 20 characters.<br>
-			The new username/password have <u>not</u> been saved.</p>'; 
+			$error .= '<p class="error">'.$ui['changeUserError'].'</p>'; 
 		}
 	}
 	if( isset($new_vals['admin_password']) && empty($new_vals['admin_password']) ){
@@ -339,14 +338,12 @@ if(isset($_POST['submitSitePrefs']) || isset($_POST['submitUserPrefs'])){
 				$new_vals['admin_password'] = sha1($new_vals['admin_password']);
 			}else{
 				unset($new_vals['admin_password'], $new_vals['admin_password_again']);
-				$error .= '<p class="error">The two admin passwords do not match!<br>
-				The new username/password have <u>not</u> been saved.</p>';
+				$error .= '<p class="error">'.$ui['pwdNoMatch'].'</p>';
 			}
 			
 		}else{
 			unset($new_vals['admin_password']);
-			$error .= '<p class="error">admin password must have 5 to 20 characters.<br>
-			The new username/password have <u>not</u> been saved.</p>'; 
+			$error .= '<p class="error">'.$ui['changePwdError'].'</p>'; 
 		}
 	}
 	// make sure to save both admin username AND password, OR NONE
@@ -426,6 +423,17 @@ if(isset($_POST['submitSitePrefs']) || isset($_POST['submitUserPrefs'])){
 		}
 	}
 
+	// load new lang file if applicable
+	if(isset($new_vals['first_lang']) && !empty($new_vals['first_lang'])){
+		//echo $new_vals['first_lang'].'<br>';
+		$new_lang_file = ROOT.'_code/admin/ui_lang/'.$new_vals['first_lang'].'.php';
+		if( file_exists($new_lang_file) ){
+			include($new_lang_file);
+		}else{
+			include(ROOT.'_code/admin/ui_lang/english.php');
+		}
+	}
+
 	if( empty($error) ){
 		if( empty($message) ){
 			$message .= '<p class="success">'.$ui['changeSaved'].'</p>';
@@ -433,39 +441,29 @@ if(isset($_POST['submitSitePrefs']) || isset($_POST['submitUserPrefs'])){
 	}else{
 		$message .= $error;
 	}
-
+	// debug
 	//echo '<pre>'.str_replace('<', '&lt;', $content).'</pre>'; //exit;
 }
 
-$main_info_class = $site_design_class = $admin_info_class = 'adminMore';
-$main_info_inner_display = $site_design_inner_display = $admin_info_inner_display = 'none';
 
 // new language added via newLang modal and admin/new_lang
 if(isset($_GET['new_lang']) && !empty($_GET['new_lang'])){
 	$message .= '<p class="note">the new language <b>'.$_GET['new_lang'].'</b> has been added to the list of languages options.</p>';
-	$main_info_h2_class = 'adminLess';
-	$main_info_inner_display = 'block';
-
+	$hash = 'mainInfo';
 }
 
 if( isset($_GET['upload_result']) ){
 	$upload_result = urldecode($_GET['upload_result']);
-	$site_design_h2_class = 'adminLess';
-	$site_design_inner_display = 'block';
+	$hash = 'siteDesign';
 }
 
 
 // message GET (from delete_file.php for exemple)
-if(isset($_GET['message'])){
+if( isset($_GET['message']) ){
 	$message = urldecode($_GET['message']);
 }
 
 require(ROOT.'_code/inc/doctype.php');
-
-
-
-
-
 
 
 
@@ -476,66 +474,83 @@ require(ROOT.'_code/inc/doctype.php');
 
 <link href="/_code/css/admincss.css?v=2" rel="stylesheet" type="text/css">
 
+<style type="text/css">
+html, body{max-height:100%;}
+#adminContainer{position:relative; padding:0;}
+.leftNav{position:absolute; width:300px; top:0; left:0;}
+.leftNav a{display:block; padding:5px 20px;}
+.leftNav a p{color:#000;}
+.leftNav a:hover{text-decoration:none; background-color:rgba(0, 0, 0, .05);}
+.leftNav a:hover h2{text-decoration:underline;}
+a.adminLess:hover{background-color:rgba(0, 0, 0, .1);}
+a.adminLess h2:after{content: " \25B8\ ";}
+a.adminLess h2{text-decoration:underline;}
+a.adminLess{background-color:rgba(0, 0, 0, .1);}
+#prefContainer{
+	margin-left:300px; margin-top:1px; 
+	max-height:100%; min-width:500px; 
+	overflow-y:auto; overflow-x:visible; 
+	/*border-left:1px solid #ddd;*/
+}
+#prefContainer input, #prefContainer textarea, #prefContainer select{width:99%;}
+#prefContainer form{padding:10px;}
+form.inner{max-width:650px; min-width:380px;}
+form.inner >div{ margin-top:20px; padding-bottom:100px;}
+div.halfContainer{float:left; width:50%; min-width:400px;}
+div.third, div.quart, div.twothird{float:left; padding:10px 1%;}
+div.third{width:32%;clear:both;}
+div.twothird{width:64%;}
+div.quart{width:48%;}
+</style>
+
 <!-- load responsive design style sheets -->
 <link rel="stylesheet" media="(max-width: 720px)" href="/_code/css/admin-max-720px.css">
 
-<style>
-/*.inner{display:none;}*/
-h2 a.adminMore:before{content: "\25B8\ ";}
-h2 a.adminLess:before{content: "\25BE\ ";}
-h2 a.adminLess{text-decoration:underline;}
-</style>
 
-<div id="working">working...</div>
-
-<div class="adminHeader">
+<div class="adminHeader" style="padding:12px;">
 <div id="admin">
 	<a href="?logout" class="button discret remove right">logout</a>
 	<a href="mailto:<?php echo AUTHOR_REF; ?>?subject=Request from <?php echo substr(SITE,0,-1); ?>" title="<?php echo $ui['helpTitle']; ?>" class="button discret help right"><?php echo $ui['help']; ?></a>
 </div>
-	<div style="padding:0 20px;">
-	<h2><a href="<?php echo $back_link; ?>">&larr; <?php echo BACK; ?></a> - <?php echo $ui['preferences']; ?></h2>
-	</div>
+	<h2 style="margin:0;"><a href="<?php echo $back_link; ?>">&larr; Admin</a> - <?php echo $ui['preferences']; ?></h2>
 </div>
 
-<div style="padding:0 20px;">
-<?php 
-if( isset($message) ){
-	echo $message;
-}
-?>
-</div>
+
 
 <!-- start adminContainer -->
 <div id="adminContainer">
+
 	
-	<div id="prefContainer" style="max-width:650px;">
-		<div id="ajaxTarget">
-		<?php if( isset($result) && !empty($result) ){
-			echo $result;
-		}
-		?>
-		
-		<form action="/_code/admin/preferences.php" name="userPreferences" method="post">
-		
-		<a name="mainInfo">&nbsp;</a>
+	<div class="leftNav">
+		<a href="#mainInfo" class="adminLess" data-show="mainInfo">
+		<h2><?php echo $ui['siteMainInfo']; ?></h2>
+		<p><?php echo $ui['siteMainInfoDescription']; ?></p>
+		</a>
 
+		<a href="#siteDesign" data-show="siteDesign">
+		<h2><?php echo $ui['designOptions']; ?></h2>
+		<p><?php echo $ui['designOptDescription']; ?></p>
+		</a>
+
+		<a href="#adminCreds" data-show="adminCreds">
+		<h2><?php echo $ui['adminAccess']; ?></h2>
+		<p><?php echo $ui['adminAccDescription']; ?></p>
+		</a>
+
+	</div>
+
+
+
+	<div id="prefContainer">
 		
-		
-		
+
 		<!-- site main info start -->
-		<div class="outer mainInfo">
-
-			<h2><a href="#mainInfo" class="<?php echo $main_info_class; ?>"><?php echo $ui['siteMainInfo']; ?></a></h2>
-
-			<p><?php echo $ui['siteMainInfoDescription']; ?></p>
-			
-			<!-- inner main info start -->
-			<div class="inner innerMainInfo" style="display:<?php echo $main_info_inner_display; ?>;">
+		<form action="/_code/admin/preferences.php#mainInfo" id="mainInfo" name="mainInfoForm" method="post" class="inner">
+		<div>
 
 			
 			<div class="third" style="text-align:right;"><?php echo $ui['bilingual']; ?>:</div>
-			<div class="twothird"><input type="radio" name="bilingual" value="yes" style="width:auto;" <?php if($bilingual == 'yes'){echo ' checked';}?> onclick="if($(this).prop('checked')==true){$('.l2').show();}else{$('.l2').hide();}"> yes &nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="bilingual" value="no" style="width:auto;" <?php if($bilingual == 'no'){echo ' checked';}?> onclick="if($(this).prop('checked')==true){$('.l2').hide();}else{$('.l2').show();}"> no</div>
+			<div class="twothird"><input type="radio" name="bilingual" value="yes" style="width:auto;" <?php if($bilingual == 'yes'){echo ' checked';}?> onclick="if($(this).prop('checked')==true){$('.l2').show();}else{$('.l2').hide();}"> <?php echo $ui['yes']; ?> &nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="bilingual" value="no" style="width:auto;" <?php if($bilingual == 'no'){echo ' checked';}?> onclick="if($(this).prop('checked')==true){$('.l2').hide();}else{$('.l2').show();}">  <?php echo $ui['no']; ?></div>
 			
 
 			<div class="third" style="text-align:right;"><?php echo $ui['firstLang']; ?>:</div>
@@ -606,26 +621,16 @@ if( isset($message) ){
 			<button type="submit" name="submitSitePrefs" class="save right"> <?php echo $ui['saveChanges']; ?> </button> <button type="reset" name="reset" class="right"><?php echo $ui['reset']; ?></button>
 			</div>
 
-			</div>
-			<!-- main info innerdiv end -->
 		</div>
+		</form>
 		<!-- site main info end -->
 		
 
 
 
-		
 		<!-- siteDesign start -->
-		<div class="outer siteDesign">
-
-			<a name="design"></a>
-			<p>&nbsp;</p>
-			<h2><a href="#design" class="<?php echo $site_design_class; ?>"><?php echo $ui['designOptions']; ?></a></h2>
-
-			<p><?php echo $ui['designOptDescription']; ?></p>
-			
-			<!-- inner site design start -->
-			<div class="inner innerSiteDesign" style="display:<?php echo $site_design_inner_display; ?>;">
+		<form action="/_code/admin/preferences.php#siteDesign" id="siteDesign" name="siteDesignForm" method="post" class="inner">
+		<div>
 			
 			<div class="third" style="text-align:right; clear:both;"><?php echo $ui['siteNav']; ?>:</div>
 			<div class="twothird" style="position:relative;">
@@ -671,7 +676,7 @@ if( isset($message) ){
 				echo $dim_warning;
 				if($bytes>=1000000){
 					$s_class = 'error';
-					$size_warning = '<p class="note warning" style="text-align:left; padding-right:30px;">The image size will considerably impact the loading time of your home page. <a href="/_code/inc/optimize.php?recommended_size=2000" target="_blank">See here how to optimize it better</a>.</p>';
+					$size_warning = '<p class="note warning" style="text-align:left; padding-right:30px;">'.$ui['bgSizeWarning'].'</p>';
 				}else{
 					$size_warning = $s_class = '';
 				}
@@ -712,7 +717,7 @@ if( isset($message) ){
 
 			<div class="third" style="text-align:right; clear:both;"><?php echo $ui['headerFont']; ?>:</div>
 			<div class="twothird" style="position:relative;">
-				<div id="specimen" style="display:none; position:absolute; top:-40%; left:100%; width:450px; padding:0 15px; border:1px solid #ccc; border-radius:3px; box-shadow:1px 1px 3px #ccc;">
+				<div id="specimen" style="display:none; position:absolute; top:-40%; left:100%; width:350px; padding:0 15px; border:1px solid #ccc; border-radius:3px; box-shadow:1px 1px 3px #ccc;">
 					<h2>Header text example</h2>
 					<p>Paragraph example: Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 				</div>
@@ -778,9 +783,8 @@ if( isset($message) ){
 			<button type="submit" name="submitSitePrefs" class="save right"> <?php echo $ui['saveChanges']; ?> </button> <button type="reset" name="reset" class="right"><?php echo $ui['reset']; ?></button>
 			</div>
 
-			</div>
-			<!-- site design innerdiv end -->
 		</div>
+		</form>
 		<!-- site design end -->
 
 
@@ -788,17 +792,9 @@ if( isset($message) ){
 
 
 		<!-- admin login start -->
-		<div class="outer adminLogin">
-
-			<a name="adminCreds"></a>
-			<p>&nbsp;</p>
-			<h2><a href="#adminCreds" class="<?php echo $admin_info_class; ?>"><?php echo $ui['adminAccess']; ?></a></h2>
-
-			<p><?php echo $ui['adminAccDescription']; ?></p>
+		<form action="/_code/admin/preferences.php#adminCreds" id="adminCreds" name="adminLoginForm" method="post" class="inner">
+		<div>
 			
-			<!-- inner admin login start -->
-			<div class="inner innerAdminLogin" style="display:<?php echo $admin_info_inner_display; ?>;">
-
 			<div class="third" style="text-align:right;"><?php echo $ui['currentUsername']; ?>:</div>
 			<div class="twothird"><input type="text" name="username" value=""></div>
 			
@@ -820,29 +816,62 @@ if( isset($message) ){
 			<button type="submit" name="submitSitePrefs" class="save right"> <?php echo $ui['saveChanges']; ?> </button> <button type="reset" name="reset" class="right"><?php echo $ui['reset']; ?></button>
 			</div>
 
-			</div>
-			<!-- admin login innerdiv end -->
 		</div>
-		<!-- admin login end -->
-
-
-
-
-
 		</form>
+		<!-- admin login end -->
 	
 
-</div><!-- ajaxTarget end -->
 </div><!-- prefContainer end -->
 
 
-<div class="clearBoth" style="padding:50px;">&nbsp;</div>
+
 </div><!-- end adminContainer -->
 
 
 <?php require(ROOT.'_code/inc/adminFooter.php'); ?>
 
 <script type="text/javascript">
+
+// which form to show?
+<?php
+// check $hash presence via php (it is set via $message result from form submission)
+if( isset($hash) ){
+	echo PHP_EOL.'var hash = \''.$hash.'\';'.PHP_EOL;
+}else{
+	echo PHP_EOL.'var hash = document.location.hash.replace("#","");'.PHP_EOL;
+}
+
+if(	!empty($message) ){
+	echo PHP_EOL.'var message = \''.$message.'\';'.PHP_EOL; 
+}else{
+	echo PHP_EOL."var message = '';".PHP_EOL;
+}
+?>
+
+var headerH = Math.floor($('.adminHeader').outerHeight());
+$('#adminContainer').css('height', (wH-headerH-2)+'px');
+
+// show / highlight relevant form / nav item
+if(hash.length){
+	$('form.inner').hide();
+	$('form#'+hash).show().prepend(message);
+	$('<a class="closeMessage">&times;</a>').appendTo('p.error, p.note, p.success');
+	$('.leftNav a').removeClass('adminLess');
+	$('.leftNav a[data-show="'+hash+'"]').addClass('adminLess');
+}else{
+	$('form.inner').hide();
+	$('form#mainInfo').show();
+}
+
+// show/hide inner divs for each preference section
+$('div.leftNav a').on('click', function(){
+	var $showEl = $("form#"+$(this).data('show'));
+	$('form.inner').hide();
+	$showEl.show();
+	$('div.leftNav a').removeClass("adminLess");
+	$(this).addClass("adminLess");
+});
+
 // generate javascript arrays from php $custom_fonts and $header_fonts
 var custom_fonts = new Array;
 var header_fonts = new Array;
@@ -901,21 +930,6 @@ function updateFont(val, target){
 		$('h1, h2, h3, .title').css('font-family', header_fonts[val]);
 	}
 }
-
-// show/hide inner divs for each preference section
-$('div.outer').on('click', 'h2 a', function(){
-	var theInnerDiv = $(this).parents('div.outer').find('div.inner');
-	if(theInnerDiv.css('display') == 'none'){
-		$('div.inner').hide();
-		theInnerDiv.show();
-		$('h2 a.adminLess').removeClass("adminLess").addClass("adminMore");
-		$(this).removeClass("adminMore").addClass("adminLess");
-	}else{
-		$('div.inner').hide();
-		theInnerDiv.hide();
-		$(this).removeClass("adminLess").addClass("adminMore");
-	}
-});
 
 // update first/second language name on selection
 $('select[name="first_lang"]').on('change', function(){

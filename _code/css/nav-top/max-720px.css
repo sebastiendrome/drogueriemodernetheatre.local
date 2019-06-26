@@ -10,14 +10,13 @@
 #nav ul li{float:none; display:block;}
 #nav ul li h1{margin-bottom:20px;}
 #nav ul li a{padding-left:0;}
-/*p.title{padding-left:20px;}*/
-/*.backTitle{left:0; top:70px; padding:10px;}*/
-.backTitle{padding-left:10px;}
+
+.backTitle, .title{padding-left:10px;}
 .backTitle h2{margin:0;}
 .backTitle.zoomPage{top:0;}
 #mobileMenu{visibility:visible; top:15px;}
-#content{margin-left:0; margin-top:54px; padding:0;}
-/*#content div.divItem:first-child{margin-top:80px;}*/
+#content{padding:20px 0;}
+
 #footer{padding-left:10px;}
 #bigImgContainer{margin-top:37px;}
 

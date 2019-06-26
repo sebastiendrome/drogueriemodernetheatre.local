@@ -72,3 +72,4 @@ if( isset($social_image) && !empty($social_image) ){ ?>
 </head>
 
 <body><!-- droguerie custom -->
+

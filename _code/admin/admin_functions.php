@@ -179,12 +179,12 @@ function string_to_array($parents_string, $glue){
 /*********** 2: DISPLAY FUNCTIONS (FUNCTIONS THAT OUTPUT HTML MARKUP) ***************/
 
 // display site structure from menu array
-function site_structure($menu_array = array(), $parents = array()){
+function site_structure($menu_array = array(), $parents = array(), $pos = 1){
 	
 	global $ui;
 
 	// n will increment menu items position
-	$pos = 1;
+	//$pos = 1;
 	$count = count($menu_array);
 	$site_structure = $path = $data_parents = $sub_class = '';
 	
@@ -193,7 +193,9 @@ function site_structure($menu_array = array(), $parents = array()){
 		$menu_array = menu_file_to_array();
 	}
 	
-	//print_r($menu_array);
+	/*echo '<pre>';
+	print_r($menu_array);
+	echo '</pre>';*/
 	
 	// open main ul container
 	if( empty($parents) ){
@@ -204,7 +206,7 @@ function site_structure($menu_array = array(), $parents = array()){
 		foreach($parents as $p){
 			list($en, $de) = explode(',', $p);
 			$path .= filename($en, 'encode').'/';
-			$sub_class .= ' class="sub"';
+			$sub_class .= 'sub';
 		}
 		$data_parents = implode("qQq", $parents); //"a section, une sectionqQqune autre, una otra"
 	}
@@ -214,8 +216,10 @@ function site_structure($menu_array = array(), $parents = array()){
 			
 			/*------------- SECTIONS -------------*/
 			if(strstr($key, ',')){
+
+				$sub_class .= ' section';
 			
-			list($en, $de) = explode(',', $key);
+				list($en, $de) = explode(',', $key);
 				$item = $path.filename($en, 'encode');
 
 				/* hidden vs. published sections */
@@ -236,13 +240,21 @@ function site_structure($menu_array = array(), $parents = array()){
 					$sh_title = $ui['hideTitle'];
 				}
 
+				// show bilingual (en, de) name only if bilingual
+				if(BILINGUAL == 'yes'){
+					$title_help = ' ('.FIRST_LANG.', '.SECOND_LANG.')';
+				}else{
+					$display_name = preg_replace('/ ?,.*/', '', $display_name);
+					$title_help = '';
+				}
+
 				/* html output for a section */
 				$site_structure .= '
-				<li'.$status.' data-name="'.$key.'" data-oldposition="'.$pos.'"'.$sub_class.'>
+				<li'.$status.' data-name="'.$key.'" data-oldposition="'.$pos.'" class="'.$sub_class.'">
 				<a href="javascript:;" class="up" title="'.$ui['moveUpTitle'].'"></a>
 				<a href="javascript:;" class="down" title="'.$ui['moveDownTitle'].'"></a>
 				<span class="nowrap">
-				<input type="text" class="position" title="'.$ui['changePosTitle'].'" name="order'.$pos.'" value="'.$pos.'" maxlength="6"><input type="text" class="nameInput" name="'.$key.'" value="'.$display_name.'" title="'.$ui['changeSecNameTitle'].'" maxlength="100"></span> 
+				<input type="text" class="position" title="'.$ui['changePosTitle'].'" name="order'.$pos.'" value="'.$pos.'" maxlength="6"><input type="text" class="nameInput" name="'.$key.'" value="'.$display_name.'" title="'.$ui['changeSecNameTitle'].$title_help.'" maxlength="100"></span> 
 				<span class="nowrap"><a href="manage_contents.php?item='.urlencode($item).'" class="edit" title="'.$ui['editSecTitle'].'">'.$ui['edit'].'</a>';
 				// !!!!!! allow only one sub-level of section!
 				if( empty($parents) ){
@@ -349,6 +361,7 @@ function display_content_admin($path = '', $menu_array = ''){
 	global $ui;
 	
 	$parents = array();
+	$sub_class = '';
 
 	// if no path provided, use SESSION[item] if possible.
 	if( empty($path) ){
@@ -384,7 +397,8 @@ function display_content_admin($path = '', $menu_array = ''){
 				}
 			}
 		// else, attempt to match current directory to sub level of menu_array(=menu_array[key][val])
-		}else{ 
+		}else{
+			$sub_class .= 'sub';
 			foreach($menu_array as $k => $v){
 				//$display .=  $k.'<br>';
 				if( preg_match('/^'.preg_quote(filename($parent_dir, 'decode')).',/', $k) ){
@@ -418,62 +432,27 @@ function display_content_admin($path = '', $menu_array = ''){
 			if( !empty($key) ){
 
 				$n++;
-				$display .= '<li data-name="'.$key.'" data-oldposition="'.$n.'">
-				<a name="'.preg_replace('/[^A-Za-z0-9]/', '', $key).'"></a>'.PHP_EOL;
 				
 				// SECTIONS
 				if( strstr($key, ',') ){
 					
-					// hidden
-					if(substr($key,0,1) == '_'){
-						// remove _ (underscore) from name
-						$display_name =  substr($key, 1);
-						$status = ' hidden';
-					// published
-					}else{
-						$display_name = $key;
-						$status = '';
-					}
-					
-					$item = basename($path);
-					$split = explode(',', $key);
-					$sub_dir = filename($split[0], 'encode');
-					$section_name = filename($key, 'decode');
-
-					
-					// html output for a sub-section
-					$display .= '<p>';
-					$display .= '
-					<a href="javascript:;" class="up" title="'.$ui['moveUpTitle'].'"></a>
-					<a href="javascript:;" class="down" title="'.$ui['moveDownTitle'].'"></a>
-					<input type="text" class="position" title="'.$ui['changePosition'].'" name="order'.$n.'" value="'.$n.'" data-item="'.$key.'"> <span class="question" title="Modifier ce chiffre pour déplacer ce fichier dans la liste à la position désirée. Vous pouvez aussi cliquer sur les flêches ci-contre à gauche pour le faire monter ou descendre.">?</span>
-					<input type="text" class="nameInput'.$status.'" name="'.$key.'" title="'.$ui['changeSecName'].'" value="'.$display_name.'" maxlength="100">';
-					if( isset($first_file) ){
-						unset($first_file);
-					}
-					foreach($val as $k => $v){
-						$first_file = $k;
-						break;
-					}
-					// display sub-section name and file only if a first file has been found
-					if(!isset($first_file)){
-						$display .= '&nbsp;&nbsp;<span class="note empty">'.$ui['emptySection'].'</span>';
-					}/*else{
-						$sub_path = $path.'/'.dir_from_section_name($key);
-						$display_file = display_file_admin($sub_path, $k);
-						$display .= '<div class="imgContainer"><div>first file in this sub-section:</div>'.$display_file.'</div>';
-						unset($first_file); // make sure first_file doesn't stay set for next sub-section through the foreach loop
-					}*/
-					$display .= '</p> 
-					<p><a href="javascript:;" class="button discret remove left deleteSection" title="Supprimer cette sous-section">'.$ui['delete'].'</a> <a href="?item='.urlencode($item.'/'.$sub_dir).'" class="button edit discret" title="'.$ui['editSubSection'].'">'.$ui['editSubSection'].'</a></p>';
-					
+					$sub_array[$key] = $val;
+					$display .= site_structure($sub_array, $parents, $n);
+					unset($sub_array);
+				
 					
 				// FILES
 				}else{
 				
+					$display .= '<li data-name="'.$key.'" data-oldposition="'.$n.'">
+					<a name="'.preg_replace('/[^A-Za-z0-9]/', '', $key).'"></a>
+					<a href="javascript:;" class="up" title="'.$ui['moveUpTitle'].'"></a>
+					<a href="javascript:;" class="down" title="'.$ui['moveDownTitle'].'"></a>';
 
 					$ext = file_extension($key);
 					$item = $path.'/_S/'.$key; // default
+
+					$action_title = '';
 					
 					$display_file = display_file_admin($path, $key);
 					
@@ -503,28 +482,30 @@ function display_content_admin($path = '', $menu_array = ''){
 					$de = stripslashes( my_br2nl( file_get_contents(ROOT.CONTENT.$de_file) ) );
 					
 					// html output for a file
-					$display .= '<div class="imgContainer"><p>
-					<a href="javascript:;" class="up" title="'.$ui['moveUpTitle'].'"></a>
-					<a href="javascript:;" class="down" title="'.$ui['moveDownTitle'].'"></a>
+					if($ext !== '.gal' && $ext !== '.html'){
+						$action_file = '<a href="javascript:;" class="button replace showModal discret" rel="newFile?path='.urlencode($_SESSION['item']).'&replace='.urlencode($item).'" title="'.$ui['replace'].'">'.$ui['replace'].'</a> ';
+					}
+					// show edit button if text/html or .emb file
+					if( preg_match($_POST['types']['text_types'], $ext) ){ // txt
+						$action_file = '<a class="button edit discret" href="/_code/admin/edit_text.php?item='.urlencode($item).'" title="'.$ui['editFileTitle'].'">'.$ui['edit'].'</a>';
+						$action_title = ' title="'.$ui['editFileTitle'].'"';
+					}elseif( $ext == '.emb'){
+						$action_file = '<a class="button edit showModal discret" href="javascript:;" rel="embedMedia?path='.urlencode($item).'" title="'.$ui['editFileTitle'].'">'.$ui['edit'].'</a>';
+						$action_title = ' title="'.$ui['editFileTitle'].'"';
+					}elseif( $ext == '.gal'){
+						$action_file = '<a class="button edit showModal discret" href="javascript:;" rel="gallery?path='.urlencode($item).'" title="'.$ui['editFileTitle'].'">'.$ui['edit'].'</a>';
+						$action_title = ' title="'.$ui['editFileTitle'].'"';
+					// show 'copy URL' button if image
+					}/*elseif(preg_match($_POST['types']['resizable_types'], $ext) ){
+						$action_file = '<a href="javascript:;" class="button copyLink discret" data-copy="'.PROTOCOL.SITE.CONTENT.$path.'/_XL/'.$key.'">copy URL</a>';
+					}*/
+					$display .= '<div class="imgContainer"'.$action_title.'><p>
 					<input type="text" class="position" title="'.$ui['changePosition'].'" name="order'.$n.'" value="'.$n.'" maxlength="6"><span class="question" title="'.$ui['changePosDescription'].'">?</span>
 					<!-- '.filename($key, 'decode').'--></p>';
 					$display .= $display_file;
 					$display .= '<p>';
 					$display .= '<a href="javascript:;" class="button remove showModal discret left" rel="deleteFile?file='.urlencode($item).'" title="'.$ui['deleteFileTitle'].'">'.$ui['delete'].'</a>';
-					if($ext !== '.gal' && $ext !== '.html'){
-						$display .= '<a href="javascript:;" class="button replace showModal discret" rel="newFile?path='.urlencode($_SESSION['item']).'&replace='.urlencode($item).'" title="'.$ui['replace'].'">'.$ui['replace'].'</a> ';
-					}
-					// show edit button if text/html or .emb file
-					if( preg_match($_POST['types']['text_types'], $ext) ){ // txt
-						$display .= '<a class="button edit discret" href="/_code/admin/edit_text.php?item='.urlencode($item).'" title="'.$ui['editFileTitle'].'">'.$ui['edit'].'</a>';
-					}elseif( $ext == '.emb'){
-						$display .= '<a class="button edit showModal discret" href="javascript:;" rel="embedMedia?path='.urlencode($item).'" title="'.$ui['editFileTitle'].'">'.$ui['edit'].'</a>';
-					}elseif( $ext == '.gal'){
-						$display .= '<a class="button edit showModal discret" href="javascript:;" rel="gallery?path='.urlencode($item).'" title="'.$ui['editFileTitle'].'">'.$ui['edit'].'</a>';
-					// show 'copy URL' button if image
-					}elseif(preg_match($_POST['types']['resizable_types'], $ext) ){
-						$display .= '<a href="javascript:;" class="button copyLink discret" data-copy="'.PROTOCOL.SITE.CONTENT.$path.'/_XL/'.$key.'">copy URL</a>';
-					}
+					$display .= $action_file;
 					
 					$display .= '</p>
 					</div>';
@@ -548,7 +529,7 @@ function display_content_admin($path = '', $menu_array = ''){
 			}
 		}
 	}else{
-		$display .= '<p style="opacity:.5;">This section is empty... Click <i>New Item</i> above to add content to this section.</p>';
+		$display .= '<p style="opacity:.5;">'.$ui['emptySecNote'].'</p>';
 	}
 	
 	$display .= '</ul>';

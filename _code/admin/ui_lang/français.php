@@ -5,7 +5,7 @@ $ui = array(
     'gallery' => 'gallerie',
     'titleAdmin' => 'Admin',
     'titleContent' => 'Admin',
-    'preferences' => 'préférences',
+    'preferences' => 'paramètres',
     'prefTitle' => 'Choisir les paramètres du site, les langues, polices et autres options visuelles',
     'logout' => 'déconnetion',
     'logoutTitle' => 'déconnetion',
@@ -17,7 +17,8 @@ $ui = array(
     'sectionNameDescription' => 'Dans les deux langues, séparé par une virgule.',
     'sectionDelConfirm' => 'Êtes vous sur·e de vouloir supprimer cette section?',
     'sectionDelWarning' => 'Ceci va effacer la section et tout son contenu.',
-    'emptySection' => 'cette section est vide',
+	'emptySection' => 'cette section est vide',
+	'emptySecNote' => 'Cette section est vide... Cliquez sur <i>+ ajouter...</i> ci-dessus pour créer du contenu.',
     'emptyGal' => 'cette gallerie est vide',
     'changeSecName' => 'changer le nom de la section',
     'changeSecNameTitle' => 'changer le nom de la section',
@@ -50,7 +51,17 @@ $ui = array(
     'bold' => 'gras',
     'underline' => 'souligné',
     'italic' => 'italique',
-    'link' => 'lien',
+	'link' => 'lien',
+	'linkRemove' => 'supprimer le lien',
+	'h1' => 'Gros en-tête',
+	'h2' => 'Moyen en-tête',
+	'h3' => 'Petit en-tête',
+	'p' => 'Paragraphe',
+	'alignLeft' => 'Justifier à gauche',
+	'alignRight' => 'Justifier à droite',
+	'alignCenter' => 'Centrer',
+	'justify' => 'Justifier',
+	'insertImg' => 'Insérer une image',
     'showCode' => 'afficher le code',
     'showCodeDescription' => 'cliquer pour affichier le code HTML. Cliquer à nouveau pour revenir à l\'affichage normal.',
     'textAreaPlaceholder' => 'Saisir ou coller votre texte ici ...',
@@ -58,11 +69,11 @@ $ui = array(
     'or' => 'OU',
 
 	/* new file modal */
-	'uploadFile' => 'Transférer un fichier',
+	'uploadFile' => 'Nouvelle image (ou fichier)',
 	'uploadFileDescription' => 'Pour transférer une image (jpg, gif ou png) ou autre fichier depuis votre ordinateur.',
-	'createFile' => 'Créer un fichier',
-	'createFileDescription' => 'Pour écrire ou copier-coller du texte, ou mettre en page du texte et des images.',
-	'embedMedia' => 'Insérer du média',
+	'createFile' => 'Créer un fichier (Texte + images)',
+	'createFileDescription' => 'Pour écrire du texte, ou mettre en page du texte et des images.',
+	'embedMedia' => 'Insérer du média (vidéo, audio...)',
 	'embedMediaDescription' => 'Pour insérer du média depuis d\'autres sites (video de youtube ou vimeo, musique / playlist de soundcloud ou bandcamp, tweet, etc...)',
 	'embedMediaInstructions' => 'Procurez-vous le code d\'insertion sur Youtube, Vimeo, Soundcloud, Bandcamp, Twitter, etc.<br>
 	Généralement ce code se trouve en cliquant le bouton "partager" (ou "<i>share</i>") puis en séléctionnant l\'option "insérer" (ou "<i>embed</i>"); vous verrez alors un morceau de code à copier-coller.',
@@ -80,6 +91,8 @@ $ui = array(
 	'imgSize' => 'Taille de l\'image',
 	'newGallery' => 'Créer une Gallerie d\'images',
 	'newGalDescription' => 'Créer une Gallerie d\'images',
+	'fileFromUploads' => 'Choisir un fichier en ligne',
+	'fileFromUpDescription' => 'Choisir parmis mes fichiers déjà en ligne.',
 
 	/* Preferences */
 	'bilingual' => 'Bilingue',
@@ -137,7 +150,11 @@ $ui = array(
 	'no' => 'non',
 	'home' => 'Accueil',
 
-    /* success/error messages */
+	/* success/error messages */
+	'wrongLogin' => 'Information éronnée. Veuillez éssayer de nouveau.',
+	'changeUserError' => 'L&#39;utilisateur doit avoir de 3 à 20 caractères.<br>Vos identifiants n&#39;ont <u>pas</u> été mofifiés.',
+	'changePwdError' => 'Le mot de passe doit avoir de 5 à 20 caractères.<br>Vos identifiants n&#39;ont <u>pas</u> été mofifiés.',
+	'pwdNoMatch' => 'Les deux mots de passe ne sont pas identiques!<br>Vos identifiants n&#39;ont <u>pas</u> été mofifiés.',
     'changeSaved' => 'Modifications sauvegardées.',
     'fileUploaded' => 'Fichier mis en ligne',
     'itemDeleted' => 'Le fichier a été supprimé.',
@@ -151,7 +168,8 @@ $ui = array(
 	/* upload messages */
 	'fileTypeNotSupported' => 'Ce type de fichier n\'est pas supporté: <b>[%rep%]</b><br>Le fichier n\'a pas été mis en ligne.',
 	'fileTooLarge' => 'Erreur: assurez vous que le fichier ne dépasse pas [%rep%]!',
+	'bgSizeWarning' => 'La taille de l\'image va impacter le chargement de votre page d\'accueil. <a href="http://portfolio.local/_code/inc/optimize.php?recommended_size=2000" target="_blank">Voyez ici comment mieux l\'optimiser</a>.',
 
     /* Various */
-    'viewLarge' => 'cliquer pour aggrandir'
+	'viewLarge' => 'cliquer pour aggrandir'
 );
