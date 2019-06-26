@@ -1,0 +1,164 @@
+@charset "UTF-8";
+
+/***** GENERIC *****/
+body{
+	margin:0; padding:0;
+}
+
+ul{list-style-type: none;}
+ul, li{padding:0; margin:0;}
+h1{font-size: 2em; margin: 0.5em 0;}
+h2{font-size: 1.5em; margin: 0.6em 0;}
+h3{font-size: 1.17em; margin: 0.7em 0;}
+
+
+/* STYLE */
+.bg{background-repeat:no-repeat; background-position:50% 50%; background-size:cover;}
+
+a{text-decoration: none;}
+a:hover, a.selected{text-decoration: underline;}
+a.imgMore{text-decoration:none; display:block;}
+/*a.imgMore:hover{
+	border-top:50px solid #eee;
+	margin-top:-50px;
+}*/
+
+img#inOut{background:#fff url(/_code/images/progress.gif) 50% 50% no-repeat;}
+
+audio, video{width:100% !important; height:auto !important;}
+
+.zoom{cursor:zoom-in; display:block;}
+.clearBoth{clear:both;}
+
+.langLink{
+	display:block; position:absolute; top:2px; right:2px;
+	font-size:smaller;
+	background-color:#fff;
+	padding:2px 5px;
+}
+
+#content p.description{margin:6px 0 14px 0;}
+p.description{clear:both;}
+
+.divItem{margin:12px 0; padding-bottom:20px; clear:both;}
+.divItem img{width:100%; max-width:100%;}
+.divItem img.icon{width:auto; border:none;}
+.divItem, div.txt, div.html{position:relative;}
+div.txt, div.html, div.audio, div.video, div.embed{margin-top:7px;}
+div.audio, div.video, div.embed{background-color:#eee;}
+div.embed iframe{display:block;}
+
+/* images inserted in html/text files should have native width, but no more than allowed by container */
+div.txt img, div.html img, .wysihtml5-editor img{width:auto; max-width:100%;}
+
+/* first p, h1, h2 and h3 in txt or html div, should have a margin-top that aligns with nav title (h1) */
+div.txt p:first-child, div.html p:first-child,
+div.txt h3:first-child, div.html h3:first-child, 
+div.txt h2:first-child, div.html h2:first-child, 
+div.txt h1:first-child, div.html h1:first-child {margin-top:0; padding-top:0;}
+#content div.divItem:first-child{margin-top:0; padding-top:0;}
+#content div.divItem:first-child div.title h2{margin-top:0; padding-top:0;}
+
+.title a span{font-size:smaller;}
+
+
+/* galleries */
+div.gallery{position:relative;background:#eee url(/_code/images/progress.gif) no-repeat 50% 50%;}
+div.gallery img{margin:0 auto;display:block; width:auto; max-width:100%; max-height:100%;}
+div.gallery a{
+    display: block;
+    position:absolute;
+    width:50%; height:100%; 
+    top:0; 
+    opacity:.5;
+}
+div.gallery a span{
+    position:absolute; top:45%;
+}
+div.gallery .prev span{left:-28px;}
+div.gallery .next span{right:-28px;}
+div.gallery a:hover{opacity:1; color:#000;}
+div.gallery .prev{left:0;}
+div.gallery .next{right:0;}
+div.gallNav{text-align:center;}
+div.gallNav a{opacity:.5;}
+div.gallNav a, div.gallery a{font-family:Verdana, Geneva, Tahoma, sans-serif; font-size:30px;}
+
+div.gallNav a:hover, div.gallNav a.selected{text-decoration:none; color:#000; opacity:1;}
+
+#mobileMenu{display:block; position:absolute; top:9px; right:18px; visibility:hidden;}
+
+.backTitle.zoomPage{left:0; padding-left:20px;}
+
+span.question{
+	cursor:pointer;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	position:relative; 
+	opacity:.3; 
+	display:inline-block; margin-left:5px; padding:3px; width:8px; height:8px; border-radius:8px; line-height:8px; text-align:center; border:1px solid #000; background-color:#fff; color:#000;
+}
+span.question:hover{opacity:1;}
+/* tooltips appear when span.question are clicked. */
+span.tooltip{
+	position:absolute; z-index:10; top:30px; left:0;
+	min-width:200px; padding:6px 10px; 
+	font-size:11px; font-family: Verdana, Geneva, Tahoma, sans-serif; font-weight:normal; line-height:15px; text-align:left; color:#fff;
+	/*border:1px solid #fff;*/
+	background-color: #2d2d2d;
+	opacity:.9;
+	border-radius:3px;
+	box-shadow:0 0 4px #fff;
+}
+
+/* wysiwyg (text editor) styles */
+/*
+.wysiwyg-font-size-smaller{font-size: smaller;}
+.wysiwyg-font-size-larger{font-size: larger;}
+.wysiwyg-font-size-xx-large{font-size: xx-large;}
+.wysiwyg-font-size-x-large{font-size: x-large;}
+.wysiwyg-font-size-large{font-size: large;}
+.wysiwyg-font-size-medium{font-size: medium;}
+.wysiwyg-font-size-small{font-size: small;}
+.wysiwyg-font-size-x-small{font-size: x-small;}
+.wysiwyg-font-size-xx-small{font-size: xx-small;}
+
+.wysiwyg-color-black{color: black;}
+.wysiwyg-color-silver{color: silver;}
+.wysiwyg-color-gray{color: gray;}
+.wysiwyg-color-white{color: white;}
+.wysiwyg-color-maroon{color: maroon;}
+.wysiwyg-color-red{color: red;}
+.wysiwyg-color-purple{color: purple;}
+.wysiwyg-color-fuchsia{color: fuchsia;}
+.wysiwyg-color-green{color: green;}
+.wysiwyg-color-lime{color: lime;}
+.wysiwyg-color-olive{color: olive;}
+.wysiwyg-color-yellow{color: yellow;}
+.wysiwyg-color-navy{color: navy;}
+.wysiwyg-color-blue{color: blue;}
+.wysiwyg-color-teal{color: teal;}
+.wysiwyg-color-aqua{color: aqua;}
+*/
+.wysiwyg-text-align-right{text-align: right;}
+.wysiwyg-text-align-center{text-align: center;}
+.wysiwyg-text-align-left{text-align: left;}
+.wysiwyg-text-align-justify{text-align: justify;}
+.wysiwyg-float-left{float: left; margin: 0 25px 15px 0;}
+.wysiwyg-float-right{float: right; margin: 0 0 15px 25px;}
+.wysiwyg-clear-right{clear: right;}
+.wysiwyg-clear-left{clear: left;}
+
+/* for outputting errors */
+aside{border:1px solid #fff; padding:10px; margin-bottom:2px; background-color:#222; color:#eee; font-family: monospace;}
+
+/********** droguerie custom **********/
+#nav h1 a{
+	color: rgba(0, 0, 0, 0);
+	padding-bottom:80px !important;
+}
+#nav{
+	background-image:url(/_content/_uploads/droguerie/logo-2.png);
+	background-repeat:no-repeat;
+	background-position: top left;
+	background-size: contain;
+}

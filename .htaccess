@@ -1,0 +1,29 @@
+Options -indexes
+Options +FollowSymLinks
+<IfModule mod_rewrite.c>
+    # Tell PHP that the mod_rewrite module is ENABLED. Then check, using: array_key_exists('HTTP_MOD_REWRITE', $_SERVER)
+    SetEnv HTTP_MOD_REWRITE On
+    RewriteEngine on
+    # exclude the following from the rewite rule
+	RewriteCond %{REQUEST_URI} !^(/_content/|/_uploads/|/_code/|/admin/|/lang-2/|/.well-known/|/google.+?.html|/404.php|/_zoom.php|/favicon.ico|/favicon.gif|/index.php)
+	RewriteRule ^/?(.+)$    /_content/$1    [NC,L]
+    RewriteRule ^/?lang-2/(.+)$   /_content/$1   [NC,L]
+    RewriteRule ^/?lang-2/$   /   [NC,L]
+    
+    # missing images:
+    <FilesMatch ".(jpg|png|gif)$">
+    ErrorDocument 404 /_code/images/404.gif
+    </FilesMatch>
+
+    ErrorDocument 404 /404.php
+</IfModule>
+
+# MIME Types we want to make sure Apache will serve...
+# AddType audio/mp4 .mp4 .m4a
+# AddType audio/mpeg .mp3 .mpg .mpeg
+# AddType audio/ogg .oga .ogg
+# AddType audio/wav .wav
+# AddType audio/webm .webm
+# AddType video/mp4 .mp4 .m4v
+# AddType video/ogg .ogv
+# AddType video/webm .webm
