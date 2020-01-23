@@ -1,0 +1,50 @@
+
+#textEditorForm textarea{display:block; min-height:150px; border:none; margin:0; padding:0; cursor:text;}
+#textEditorForm textarea{font-family: "Lucida Console", "Lucida Sans Typewriter", Monaco, monospace;}
+
+.textareaContainer{
+	clear:both; margin-top:10px; padding:10px;
+	border:1px solid #ccc;
+	overflow:auto;
+}
+
+#editor:focus{outline: 0;}
+
+#editTextHeader h2{margin:0; padding:0.6em 0;}
+/*#content{padding:10px; max-width:670px;}*/
+
+div#saveResetButs{display:none; padding-top:15px;}
+
+
+#toolbar{position:relative;}
+#toolbar a{display:inline-block; padding:0 4px; margin-top:10px; border:1px solid #bbb; background-color:#fff; color:#000; border-radius:3px; min-width:10px; text-align:center;}
+#toolbar a:hover{border-color:#666;}
+#toolbar a.wysihtml5-command-active{background-color:#000; color:#fff;}
+#toolbar .dialogDiv{
+    position:absolute; 
+    padding:5px; padding-right:20px;
+    background-color:#fff;
+    border:1px solid #999; 
+    border-radius:3px;
+	box-shadow:-3px 3px 5px 3px rgba(0,0,0, .2);
+	z-index:9;
+}
+#toolbar .dialogDiv a{margin-top:0;}
+#createLink{top:70px; left:-10px;}
+#itemColors{top:70px; right:-10px;}
+#tColorModal{top:70px; left:-10px;}
+#tColorModal div{float:left; border:1px solid #ccc; width:20px; height:20px; margin:0 2px;}
+#toolbar div#lang{position:absolute; width:auto; top:-11px; right:0;}
+#toolbar div#lang a{border-radius:0; padding-left:15px; padding-right:15px;}
+#toolbar div#lang div#prevent{display:none; position:absolute; top:0; right:0; left:0; bottom:0; background: rgba(255,255,255, .5) url(../admin/images/hidden-bg.png);}
+#tCListen{position:relative;}
+#tCListen span#t{font-weight:bold; color:#ff9100;}
+#tCListen span#b{font-weight:bold; color:#0099ff; position:absolute; top:50%; bottom:0; left:0; right:0; line-height:0; overflow:hidden;}
+
+div#removeArticleStyle{border-bottom:1px solid #ccc; padding:4px 0 10px 0; margin-bottom:8px;}
+
+#toolbar .closeBut{border-radius:0; border:none; padding:0; line-height:15px; width:20px;height:20px; background-color:transparent;}
+
+#workflow{position:absolute; bottom:-11px; right:0;}
+#workflow a{margin-left:-1px; border-radius:0;}
+

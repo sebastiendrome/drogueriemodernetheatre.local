@@ -5,17 +5,17 @@ Options +FollowSymLinks
     SetEnv HTTP_MOD_REWRITE On
     RewriteEngine on
     # exclude the following from the rewite rule
-	RewriteCond %{REQUEST_URI} !^/(~content/|KYM-download/|~download/|~kym/|~code/|admin/|lang-2/|.well-known/|google.+?.html|404.php|favicon.ico|favicon.gif|index.php)
-	RewriteRule ^/?(.+)$    /~content/$1    [NC,L]
-    RewriteRule ^/?lang-2/(.+)$   /~content/$1   [NC,L]
-    RewriteRule ^/?lang-2/$   /   [NC,L]
+	RewriteCond %{REQUEST_URI} !^/[%rep%](~content/|~code/|admin/|lang-2/|.well-known/|google.+?.html|404.php|favicon.ico|favicon.gif|index.php)
+	RewriteRule ^/?(.+)$    /[%rep%]~content/$1    [NC,L]
+    RewriteRule ^/?lang-2/(.+)$   /[%rep%]~content/$1   [NC,L]
+    RewriteRule ^/?lang-2/$   /[%rep%]   [NC,L]
     
     # missing images:
     <FilesMatch ".(jpg|png|gif)$">
-    ErrorDocument 404 /~code/images/404.gif
+    ErrorDocument 404 /[%rep%]~code/images/404.gif
     </FilesMatch>
 
-    ErrorDocument 404 /404.php
+    ErrorDocument 404 /[%rep%]404.php
 </IfModule>
 
 # MIME Types we want to make sure Apache will serve...

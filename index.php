@@ -1,5 +1,5 @@
 <?php
-require('_code/inc/first_include.php');
+require('~code/inc/first_include.php');
 if(LANG == 'de'){
     $seo_title = $seo_title_de;
     $seo_description = $seo_description_de;
@@ -13,14 +13,28 @@ if(empty($seo_title)){
     $title = $seo_title;
 }
 if(empty($seo_description)){
-    $description = USER;
+    $description = $title;
 }else{
     $description = $seo_description;
 }
 
 $page = 'home';
 
-$slides_dir = '_content/_uploads/home-slides/';
+require(ROOT.'~code/inc/doctype.php');
+
+require(ROOT.'~code/inc/nav.php');
+?>
+
+
+
+<!-- droguerie custom - slides specific start -->
+
+<?php
+/* ALTERNATIVELY:
+ get array from txt file: /~content/home-slides.txt and prepend to each: '~content/~uploads/_L/'
+ */
+// Create array of slides from directory content
+$slides_dir = '~content/~uploads/home-slides/';
 $slides = array();
 if( $handle = opendir(ROOT.$slides_dir) ){
 	while(false !== ($file = readdir($handle) ) ) {
@@ -31,109 +45,89 @@ if( $handle = opendir(ROOT.$slides_dir) ){
 	closedir($handle);
 }
 shuffle($slides);
-$slides_data_output = '["'.implode('","', $slides).'"]';
-
-require(ROOT.'_code/inc/doctype.php');
 ?>
-
-<script type="text/javascript">
-var imgLoaded = 0;
-function setImgLoaded(){imgLoaded = 1;}
-</script>
 
 <style type="text/css">
-html, body{height:100%;}
-
-div#slideContainer {
-	width:100%; height: 100%;
-	/* Default image. */
-	background-image: url(<?php echo $slides[0]; ?>);
+body{
+	background-image: url(<?php echo $slides[0]; ?>); /* Default image. */
 	background-repeat: no-repeat;
-	background-position: top left;
+	background-position: 50%;
 	background-size: cover;
 	background-color:#000;
-	-webkit-transition: all 0.7s ease;
-	-moz-transition: all 0.7s ease;
-	-ms-transition: all 0.7s ease;
-	-o-transition: all 0.7s ease;
-	transition: all 0.7s ease;
+	-webkit-transition: background-image 1s ease;
+	-moz-transition: background-image 1s ease;
+	-ms-transition: background-image 1s ease;
+	-o-transition: background-image 1s ease;
+	transition: background-image 1s ease;
 }
-/* additional CSS for hidden image preload section */
-div#hidden{ display: none; }
 
-<?php
-if(CSS == 'nav-left'){ 
-	echo '
-	#nav ul li ul{background-color: transparent;}
-	#nav{background-color:rgba(255, 255, 255, .8);}
-	';
-}
-?>
-#footer{position:absolute; bottom:0;}
+<?php if(CSS == 'nav-left'){ ?>
+/* translucent nav */
+#nav ul li ul{background-color: transparent;}
+#nav{background-color:rgba(255, 255, 255, .8);}
+<?php }else{ ?>
+body{background-position: top center;}
+<?php } ?>
+
 </style>
 
-<?php require(ROOT.'_code/inc/nav.php'); ?>
-
-<div id="slideContainer">&nbsp;</div>
-
-
-<div id="hidden">
-<?php
-echo '<img src="'.$slides[1].'" id="loadingImg" onload="setImgLoaded();">';
-?>
-</div>
-
-
 <script type="text/javascript">
-var slides = <?php echo $slides_data_output; ?>;
+// create js array of slides from php array
+var slides = new Array;
+<?php
+$i = 0;
+foreach($slides as $s){
+	echo 'slides['.$i.'] = "'.$s.'";'.PHP_EOL;
+	$i++;
+}
+?>
 var len = slides.length;
-var slideNum = 1;
-var timeOut = 3500;
-var checkOut = 500;
-var loadingImgId = 'loadingImg';
-var allLoaded = 0; // gets updated to 1 when all images have loaded, but has no consequences below...
-var changeTime;
-var checkTime;
-
-function checkAndLoad(){
-
-	if(imgLoaded == 1){ // loaded - do your work
-		clearTimeout(checkTime);
-		if(timeOut <= 0){
-			timeOut = 1;
+var n = 0;
+var waitTime = 4000; // 4 seconds
+var tOut;
+var slidesDiv = document.body;
+// load slide[n] in DOM
+function loadSlide(){
+	// create new image in DOM
+	var newImage = new Image();
+			
+	// onload function, must be declared before the new image source is set
+	newImage.onload = function(){
+		slidesDiv.style.backgroundImage = 'url(' + newImage.src + ')';
+		if(n < len-1){
+			n++;
+		}else{
+			n = 0;
 		}
-		imgLoaded = 0;
-		//console.log(slideNum+' loaded: '+timeOut);
-		changeImg();
-	
-	}else{ // not loaded, check again until loaded
-		timeOut = timeOut - checkOut;
-		//console.log(slideNum+' not loaded: '+timeOut);
-		checkTime = setTimeout(checkAndLoad, checkOut);
+		var tDone = performance.now();
+		var timeTaken = tDone-tStart;
+		if(timeTaken > waitTime){
+			tOut = 1;
+		}else{
+			tOut = waitTime-timeTaken;
+		}
+		//alert(tOut);
+		setTimeout(loadSlide, tOut);
 	}
-}
 
-function doIt(){
-	$("#slideContainer").css("background-image", 'url("'+slides[slideNum]+'")');
-	clearTimeout(changeTime);
-	if(slideNum < (len-1)){
-		slideNum++;
-	}else{
-		slideNum = 0;
-		allLoaded = 1;
-	}
-	document.getElementById(loadingImgId).src = slides[slideNum];
-	timeOut = 3500;
-	checkTime = setTimeout(checkAndLoad, checkOut);
+	var tStart = performance.now();
+	// set the new source (will trigger onload function above)
+	newImage.src = slides[n];
 }
-
-function changeImg(){
-	//console.log(slideNum+' showing. '+timeOut);
-	changeTime = setTimeout(doIt, timeOut);
-}
-
-checkAndLoad();
+// when 1 slide has loaded, assign image to body bg
+loadSlide();
 
 </script>
 
-<?php require(ROOT.'_code/inc/footer.php'); ?>
+<!-- droguerie custom - slides specific end -->
+
+
+
+<!-- start content -->
+<div id="content">
+&nbsp;
+</div><!-- end content -->
+
+<div class="clearBoth"></div>
+
+<?php require(ROOT.'~code/inc/footer.php'); ?>

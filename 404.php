@@ -1,26 +1,13 @@
 <?php
-require('_code/inc/first_include.php');
+require('~code/inc/first_include.php');
 
 header('HTTP/1.0 404 Not Found');
 $title = $description = '404: Page not found';
 $page = '404';
 
-// social image (for meta property="og:image") is the background image in home page...
-if( file_exists( ROOT.'_code/images/home/bg.jpg') ){
-	$home_image = 'bg.jpg';
-}elseif( file_exists( ROOT.'_code/images/home/bg.gif') ){
-	$home_image = 'bg.gif';
-}elseif( file_exists( ROOT.'_code/images/home/bg.png') ){
-	$home_image = 'bg.png';
-}
-if( isset($home_image) ){
-	$social_image = PROTOCOL.SITE.'_code/images/home/'.$home_image;
-}
+require(ROOT.'~code/inc/doctype.php');
 
-
-require(ROOT.'_code/inc/doctype.php');
-
-require(ROOT.'_code/inc/nav.php');
+require(ROOT.'~code/inc/nav.php');
 
 ?>
 
@@ -36,5 +23,5 @@ page not found</div>
 
 <div class="clearBoth"></div>
 
-<?php require(ROOT.'_code/inc/footer.php'); ?>
+<?php require(ROOT.'~code/inc/footer.php'); ?>
 

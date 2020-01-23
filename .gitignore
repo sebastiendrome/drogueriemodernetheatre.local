@@ -1,7 +1,7 @@
 .DS_Store
-_content/
+~content/
 *.psd
 .vscode/settings.json
-_uploads/
+~uploads/
 php.ini
 extra/
