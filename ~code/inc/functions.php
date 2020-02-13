@@ -127,9 +127,13 @@ function display_content_array($path, $menu_array = ''){
 			}elseif(LANG == 'de') {
 				$subsection_title = trim($split[1]);
 			}
-			
+			/*
 			$back_title = '<div class="backTitle uniBg"><span class="back"><a href="javascript:history.go(-1);">← '.BACK.'</a> &nbsp;|&nbsp; </span>'.$subsection_title.'</div>
 			<div class="placeHolderTitle">&nbsp;</div>'.PHP_EOL;
+			*/
+			/* custom */
+			$back_title = '<div class="backTitle uniBg"><h2>'.$subsection_title.'</h2></div>
+			<!-- <div class="title"><h2>&nbsp;</h2></div> -->'.PHP_EOL;
 			
 		}
 		
@@ -206,8 +210,11 @@ function display_content_array($path, $menu_array = ''){
 						$display .= $back_title;
 						unset($back_title);
 					}
-					
+					/*
 					$display .= '<div class="title"><a href="/'.DEMO.LANG_LINK.$path.'/'.$sec_dir.'/">'.$sec_name.'&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;<span class="more">&rarr; '.MORE.'</span></a></div>';
+					*/
+					/* custom */
+					$display .= '<div class="title"><h2>'.$sec_name.' <a href="/'.DEMO.LANG_LINK.$path.'/'.$sec_dir.'/" class="aMore"><span>&nbsp;&rarr; '.MORE.'</span></a></h2></div>';
 					
 					// if optional 3rd var is TRUE, display file without enclosing <a> tag.
 					$display_file = display_file($k, TRUE);
