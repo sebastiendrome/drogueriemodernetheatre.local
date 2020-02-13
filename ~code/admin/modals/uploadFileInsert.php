@@ -58,7 +58,7 @@ if( isset($_GET['allowed_types']) ){
 
 	
 	<div id="imgUrlDiv" class="hideUp">
-        <h3><?php echo $ui['insertURLTitle']; ?> <span class="question" title="<?php echo $ui['insertURLInstructions']; ?>">?</span></h3>
+        <span class="tip" data-tip="<?php echo $ui['insertURLInstructions']; ?>"><h3><?php echo $ui['insertURLTitle']; ?></h3></span>
 		<input id="img_url" value="" placeholder="http://" style="width:calc(100% - 120px);">
 		<a class="button submit insertImage right"><?php echo $ui['insertURL']; ?></a>
 		<p class="above" style="margin-top:0;"><?php echo $ui['insertURLDescription']; ?></p>
@@ -145,9 +145,10 @@ function insertImg(img_url){
 		//var imgSrc = img_url+'" srcset="'+l_img_url+' 800w, '+img_url+' 650w, '+s_img_url+' 300w" sizes="(max-width: 1370px) 650px, (max-width: 340px) 300px, 800px"';
 
 		var set = l_img+' 800w, '+m_img+' 650w, '+s_img+' 300w';
-		var siz = '(max-width: 1370px) 650px, (max-width: 340px) 300px, 800px';
+		var siz = '(max-width: '+img_w_limit+'px) 650px, (max-width: 340px) 300px, 800px';
+		var imAlt = '';
 
-		editor.composer.commands.exec("insertImage", {srcset:set, src:img_url, sizes:siz, alt:''});
+		editor.composer.commands.exec("insertImage", {srcset:set, src:img_url, sizes:siz, alt:imAlt});
 	
 		// if not, just insert the image url
 	}else{

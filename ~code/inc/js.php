@@ -11,6 +11,7 @@ var demo = '<?php echo DEMO; ?>';
 var content = '<?php echo CONTENT; ?>';
 var nav = '<?php if( isset($_GET['nav']) ){echo $_GET['nav'];}else{echo CSS;} ?>';
 var show_sub_nav = '<?php echo $show_sub_nav; ?>';
+var img_w_limit = <?php echo L_W_LIMIT; ?>;
 </script>
 
 <?php

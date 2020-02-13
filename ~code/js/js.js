@@ -61,29 +61,32 @@ $(window).on("load", function(){
 	var $nav = $('#nav');
 	var nH = $nav.outerHeight();
 
-	// make articles images zoomable (div.divItem: only in site, not in admin)
+	// make articles images zoomable (div.divItem: only in site, not in admin) and if not nested in <a> tag
 	$('div.divItem div.txt img, div.divItem div.html img').on('click', function(){
-		var lm = $(this).attr('src');
-		if(lm.indexOf('/'+content) != -1){
-			lm = lm.replace('/'+content, '');
-			//lm = lm.replace( /(\/_M\/|\/_L\/|\/_S\/)/, '/_XL/');
-			window.location.href = '/'+demo+'~code/_zoom.php?img='+encodeURIComponent(lm)+'&lang='+lang;
-		}else{
-			window.open(lm, '_blank');
+		var inA = $(this).parent('a'); // look for <a> parent tag
+		if(inA.length === 0){ // image is not nested in an <a> tag
+			var lm = $(this).attr('src');
+			if(lm.indexOf('/'+content) != -1){
+				lm = lm.replace('/'+content, '');
+				window.location.href = '/'+demo+'~code/_zoom.php?img='+encodeURIComponent(lm)+'&lang='+lang;
+			}else{
+				window.open(lm, '_blank');
+			}
 		}
 	});
 
 	// limit nav height (and update nH var)
 	limitNavHeight($nav, wH);
 
-	/****** droguerie custom ******/
 	// move '.aMore' link when mouse over '.imgMore' (for sub-sections)
 	$('div.divItem').on('mouseenter', 'a.imgMore', function(){
-		$(this).closest('.divItem').find('.aMore').animate({paddingLeft: 20}, 200);
+		$(this).closest('.divItem').find('div.title a').css('text-decoration','underline');
+		//$(this).closest('.divItem').find('.more').animate({paddingLeft: 20}, 200);
 	});
 	// move-back '.aMore' link on mouse leave '.imgMore' (for sub-sections)
 	$('div.divItem').on('mouseleave', 'a.imgMore', function(){
-		$(this).closest('.divItem').find('.aMore').animate({paddingLeft: 0}, 200);
+		$(this).closest('.divItem').find('div.title a').css('text-decoration','none');
+		//$(this).closest('.divItem').find('.more').animate({paddingLeft: 0}, 200);
 	});
 
 

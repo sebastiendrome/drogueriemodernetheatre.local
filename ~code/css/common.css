@@ -51,10 +51,10 @@ span.galZoom{
 	padding:2px 5px;
 }
 
-#content p.description{margin:6px 0 14px 0;}
+#content p.description{margin:15px 0 20px 0;}
 p.description{clear:both;}
 
-.divItem{margin:12px 0; padding-bottom:20px; clear:both;}
+.divItem{/*margin:12px 0; */padding-bottom:32px; clear:both;}
 .divItem img{width:100%; max-width:100%;}
 /*.divItem svg{max-width:100%;}*/
 .divItem img.icon{width:auto; border:none;}
@@ -82,11 +82,10 @@ div.txt h2:first-child, div.html h2:first-child,
 div.txt h1:first-child, div.html h1:first-child {margin-top:0; padding-top:0;}
 */
 
-.title a span{font-size:smaller;}
-/*div.title, div.backTitle, div.placeHolderTitle{padding-bottom:10px;}*/
+div.title, div.backTitle, div.placeHolderTitle{padding-bottom:10px;}
 
 /* galleries */
-div.gallery{position:relative;background:#eee url(../images/progress.svg) no-repeat 50% 50%;}
+div.gallery{position:relative;background:transparent url(../images/progress.svg) no-repeat 50% 50%;}
 div.gallery img{margin:0 auto;display:block; width:auto; max-width:100%; max-height:100%; background:#ddd;}
 div.gallery a{
     display: block;
@@ -120,6 +119,7 @@ div.gallNav a:hover, div.gallNav a.selected{text-decoration:none; color:#000; op
 .backTitle.zoomPage{left:0; padding:15px;}
 
 #footer{font-size:smaller; padding:10px;}
+#footer a, #nav li.lastLi a{color: inherit;}
 
 /* offset anchor a tags 80px down to account for fixed adminHeader */
 a:target{
@@ -141,8 +141,11 @@ aside{border:1px solid #fff; padding:10px; margin-bottom:2px; background-color:#
 .wysiwyg-text-align-center{text-align: center;}
 .wysiwyg-text-align-left{text-align: left;}
 .wysiwyg-text-align-justify{text-align: justify;}
-.wysiwyg-float-left{float: left; margin: 0 25px 15px 0;}
-.wysiwyg-float-right{float: right; margin: 0 0 15px 25px;}
+.wysiwyg-float-left{float: left; margin: 0 25px 15px 0; max-width:70%;}
+.wysiwyg-float-right{float: right; margin: 0 0 15px 25px; max-width:70%;}
+.wysiwyg-width-half {
+	width: 50%;
+}
 .wysiwyg-clear-right{clear: right;}
 .wysiwyg-clear-left{clear: left;}
 /*
@@ -172,15 +175,5 @@ aside{border:1px solid #fff; padding:10px; margin-bottom:2px; background-color:#
 .wysiwyg-color-blue{color: blue;}
 .wysiwyg-color-teal{color: teal;}
 .wysiwyg-color-aqua{color: aqua;}
-/********** droguerie custom **********/
-#nav h1 a{
-	color: rgba(0, 0, 0, 0);
-	padding-bottom:80px !important;
-}
-#nav{
-	background-image:url(/~content/~uploads/droguerie/logo-2.png);
-	background-repeat:no-repeat;
-	background-position: top left;
-	background-size: contain;
-}
+
 

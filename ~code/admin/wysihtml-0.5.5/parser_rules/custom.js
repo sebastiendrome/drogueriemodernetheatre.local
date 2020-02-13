@@ -48,6 +48,7 @@ var wysihtml5ParserRules = {
 			"background-color": true,
 			"float": true,
 			"width": true,
+			"border": true
 		}
 	},
 	"type_definitions": {
@@ -213,7 +214,8 @@ var wysihtml5ParserRules = {
                 "title": "any",
 				"href": "any",
 				"onclick": "any",
-				"name": "any"
+				"name": "any",
+				"class": "any"
             },
             /*"set_attributes": {
                 "rel": "nofollow"
@@ -226,11 +228,18 @@ var wysihtml5ParserRules = {
                 "width": "dimension",
                 "alt": "alt",
 				"src": "any", // if you compiled master manually then change this from 'url' to 'src'
-                "height": "dimension"
+				"height": "dimension",
+				"class": "any"
             },
             "add_class": {
                 "align": "align_img"
-            }
+			},
+			"keep_styles": {
+				"border": 1,
+				"float": 1,
+				"margin": 1,
+				"width": 1
+			}
         },
         "rb": {
             "rename_tag": "span"

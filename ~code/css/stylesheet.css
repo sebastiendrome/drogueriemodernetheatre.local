@@ -60,6 +60,10 @@
   margin: 0 0 8px 8px;
 }
 
+.wysiwyg-width-half {
+	width: 50%;
+}
+
 .wysiwyg-clear-right {
   clear: right;
 }

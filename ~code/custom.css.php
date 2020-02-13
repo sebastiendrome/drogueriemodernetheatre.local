@@ -43,6 +43,8 @@ function overlaybg($site_bg_color){ // aabbcc or 002fc1 etc.
 }
 $overlay_bg = overlaybg($site_bg_color);
 
+
+/**** START OUTPUT ****/
 $output = '@charset "UTF-8";'.PHP_EOL;
 
 // import google fonts if necessary
@@ -173,6 +175,9 @@ if( CSS == 'nav-left'){
 if($bilingual == 'no'){
 	$output .= '.l2{display:none;}'.PHP_EOL;
 }
+
+/**** END OUTPUT ****/
+
 
 if($fp = fopen(ROOT.CONTENT.'_custom_css.css', 'w')){
 	fwrite($fp, $output);

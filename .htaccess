@@ -5,7 +5,7 @@ Options +FollowSymLinks
     SetEnv HTTP_MOD_REWRITE On
     RewriteEngine on
     # exclude the following from the rewite rule
-	RewriteCond %{REQUEST_URI} !^/(~content/|KYM-download/|~download/|~kym/|~code/|admin/|lang-2/|.well-known/|google.+?.html|404.php|favicon.ico|favicon.gif|index.php)
+	RewriteCond %{REQUEST_URI} !^/(~content/|~code/|~custom/|admin/|lang-2/|.well-known/|google.+?.html|404.php|favicon.ico|favicon.gif|index.php|KYM-download/|~download/|~kym/)
 	RewriteRule ^/?(.+)$    /~content/$1    [NC,L]
     RewriteRule ^/?lang-2/(.+)$   /~content/$1   [NC,L]
     RewriteRule ^/?lang-2/$   /   [NC,L]

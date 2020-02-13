@@ -23,37 +23,38 @@ $page = 'home';
 require(ROOT.'~code/inc/doctype.php');
 
 require(ROOT.'~code/inc/nav.php');
-?>
 
 
-
-<!-- droguerie custom - slides specific start -->
-
-<?php
-/* ALTERNATIVELY:
- get array from txt file: /~content/home-slides.txt and prepend to each: '~content/~uploads/_L/'
- */
-// Create array of slides from directory content
-$slides_dir = '~content/~uploads/home-slides/';
-$slides = array();
-if( $handle = opendir(ROOT.$slides_dir) ){
-	while(false !== ($file = readdir($handle) ) ) {
-	if(substr($file, 0, 1) != "."){
-			$slides[] = '/'.$slides_dir.$file;
+/*** BACKGROUND IMG OR SLIDES START ***/
+// get array of slides from txt file: /~content/home-slides.txt
+// try opening the file for reading
+$slides_file = ROOT.CONTENT.'home-slides.txt';
+if( file_exists($slides_file) ){
+	$handle = @fopen($slides_file, 'r');
+	if($handle){
+		// on success, set $slides array
+		$home_slides = array();
+		while( ($line = fgets($handle, 400) ) !== false){
+			// process the line read.
+			$home_slides[] = trim($line); // trim line in case line-break is included
 		}
+		fclose($handle);
 	}
-	closedir($handle);
 }
-shuffle($slides);
+
+/* start if home_slides */
+if( isset($home_slides) && !empty($home_slides) ){
+	shuffle($home_slides);
+	// next, output css and javascript to process the slide show (update body background-image via css transition triggered by javascript)
 ?>
 
 <style type="text/css">
 body{
-	background-image: url(<?php echo $slides[0]; ?>); /* Default image. */
+	background-image: url(/~content/~uploads/_M/<?php echo $home_slides[0]; ?>); /* Default image. */
 	background-repeat: no-repeat;
 	background-position: 50%;
 	background-size: cover;
-	background-color:#000;
+	/*background-color:#000;*/
 	-webkit-transition: background-image 1s ease;
 	-moz-transition: background-image 1s ease;
 	-ms-transition: background-image 1s ease;
@@ -66,6 +67,7 @@ body{
 #nav ul li ul{background-color: transparent;}
 #nav{background-color:rgba(255, 255, 255, .8);}
 <?php }else{ ?>
+/* position bg image to top if nav-top */
 body{background-position: top center;}
 <?php } ?>
 
@@ -76,7 +78,7 @@ body{background-position: top center;}
 var slides = new Array;
 <?php
 $i = 0;
-foreach($slides as $s){
+foreach($home_slides as $s){
 	echo 'slides['.$i.'] = "'.$s.'";'.PHP_EOL;
 	$i++;
 }
@@ -85,6 +87,8 @@ var len = slides.length;
 var n = 0;
 var waitTime = 4000; // 4 seconds
 var tOut;
+var path = '/~content/~uploads/';
+var img_size = '_L/';
 var slidesDiv = document.body;
 // load slide[n] in DOM
 function loadSlide(){
@@ -100,7 +104,14 @@ function loadSlide(){
 			n = 0;
 		}
 		var tDone = performance.now();
+		// image load time
 		var timeTaken = tDone-tStart;
+		// switch image size depending on image load time
+		if(timeTaken < 3000){
+			img_size = '_XL/';
+		}else if(timeTaken > 5000){
+			img_size = '_L/';
+		}
 		if(timeTaken > waitTime){
 			tOut = 1;
 		}else{
@@ -112,14 +123,51 @@ function loadSlide(){
 
 	var tStart = performance.now();
 	// set the new source (will trigger onload function above)
-	newImage.src = slides[n];
+	newImage.src = path+img_size+slides[n];
 }
-// when 1 slide has loaded, assign image to body bg
+// when 1 slide has loaded, assign image to body css bg
 loadSlide();
-
 </script>
 
-<!-- droguerie custom - slides specific end -->
+<?php 
+// end if home_slides; if home_image, set it as body background-image
+}elseif( isset($home_image) ){
+	// background image position account for header if nav-top
+	if( CSS == 'nav-top'){
+		$bg_position = 'background-position:50% 35%; ';
+	}else{
+		$bg_position = 'background-position:50% 50%; ';
+	}
+	// various sizes
+	$m_bg = CONTENT.UPLOADS.'_M/'.$home_image;
+	$l_bg = CONTENT.UPLOADS.'_L/'.$home_image;
+	$xl_bg = CONTENT.UPLOADS.'_XL/'.$home_image;
+	
+	echo '
+	<style type="text/css">
+	/* home page background */
+	body{
+		background-repeat:no-repeat;
+		'.$bg_position.'
+		background-size:cover;
+		background-image:url(/'.$m_bg.');
+	}
+	@media only screen and (min-width: 320px) {
+		body{
+			background-image:url(/'.$l_bg.');
+		}
+	}
+	@media only screen and (min-width: 650px) {
+		body{
+			background-image:url(/'.$xl_bg.');
+		}
+	}
+	</style>';
+
+} // end NO slides
+/*** BACKGROUND IMG OR SLIDES END ***/
+
+?>
 
 
 

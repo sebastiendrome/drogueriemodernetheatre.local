@@ -55,7 +55,7 @@ if(
 		$_SESSION['login_attempt'] += 1;
 	}
 	if( isset($_SESSION['login_attempt']) && $_SESSION['login_attempt'] > 1){
-		$message .= '<p class="note">'.str_replace('[%rep%]', AUTHOR_REF, $ui['loginTrouble']).'</p>';
+		$message .= '<p class="note">'.str_replace('[%rep%]', AUTHOR_EMAIL, $ui['loginTrouble']).'</p>';
 	}
 }
 

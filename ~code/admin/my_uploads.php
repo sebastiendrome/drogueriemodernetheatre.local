@@ -70,7 +70,7 @@ require(ROOT.DEMO.'~code/inc/doctype.php');
 <div class="adminHeader">
 <div id="admin">
 	<!--<a href="?logout" class="button discret remove right"><?php echo $ui['logout']; ?></a>
-	<a href="mailto:<?php echo AUTHOR_REF; ?>?subject=Request from <?php echo substr(SITE,0,-1); ?>" title="<?php echo $ui['helpTitle']; ?>" class="button discret help right"><?php echo $ui['help']; ?></a>-->
+	<a href="mailto:<?php echo AUTHOR_EMAIL; ?>?subject=Request from <?php echo substr(SITE,0,-1); ?>" title="<?php echo $ui['helpTitle']; ?>" class="button discret help right"><?php echo $ui['help']; ?></a>-->
 	<a href="preferences.php" title="<?php echo $ui['prefTitle']; ?>" class="button discret fav right"><?php echo $ui['preferences']; ?></a>
 	<a href="my_uploads.php" title="" class="button discret fichiers right selected"><?php echo $ui['myUploads']; ?></a>
 	<a href="/<?php echo DEMO; ?>admin/" title="" class="button discret structure right"><img src="/<?php echo DEMO; ?>~code/images/mobile-menu.svg" style="width:9px; margin-right:5px;"><?php echo $ui['siteStructure']; ?></a>

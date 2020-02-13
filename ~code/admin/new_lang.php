@@ -62,7 +62,7 @@ if(!empty($error)){
     }
 
     // send me the new language data
-    mail(AUTHOR_REF, 'new language artist portfolio', 'language = '.$post['new_lang'].', seo = '.$post['seo'].', more = '.$post['more'].' back = '.$post['back']);
+    mail(AUTHOR_EMAIL, 'new language artist portfolio', 'language = '.$post['new_lang'].', seo = '.$post['seo'].', more = '.$post['more'].' back = '.$post['back']);
 
     // redirect to admin/preferences
     header("Location: preferences.php?new_lang=".$post['new_lang'].'&lang_num='.$post['lang_num']);

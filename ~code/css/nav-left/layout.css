@@ -9,13 +9,13 @@
 #content{
 	padding:20px;
 	margin-top:20px; 
-	margin-left:34%; /****** droguerie custom *******/
+	margin-left:30%; 
 	max-width:650px;
 }
 #nav ul{padding:0;}
 #nav ul li{padding:0 15px;}
 #nav ul li a{display:block; padding:.3em 10px;}
-#nav ul li h1{margin-top:0; font-size:1.5em;} /******* font-size: droguerie custom *******/
+#nav ul li h1{margin-top:0;/* font-size:1.5em;*/}
 #nav ul li.lastLi{margin-top:20px;}
 #nav ul li.lastLi a, #nav ul li h1 a{display: inline-block;}
 #nav ul li h1 a{padding-top:0;}
@@ -29,5 +29,12 @@
 .backTitle li{margin:6px 0; padding-right:20px;}
 #content div.divItem:first-child{margin-top:0; padding-top:0;}
 #content div.divItem:first-child div.title h2{margin-top:0; padding-top:0;}
+
+/* first p, h1, h2 and h3 in txt or html div, should have a margin-top that aligns with nav title (h1) */
+div#content div:first-child,
+div.txt p:first-child, div.html p:first-child,
+/*div.txt h3:first-child, div.html h3:first-child, 
+div.txt h2:first-child, div.html h2:first-child, */
+div.txt h1:first-child, div.html h1:first-child {margin-top:0; padding-top:0;}
 
 #footer{padding-left:40px;}

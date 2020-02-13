@@ -5,8 +5,3 @@
 .backTitle{top:20px; left:250px;}
 #content{padding:10px; margin-top:10px; margin-left:240px;}
 #footer{padding-left:20px;}
-
-/********** droguerie custom **********/
-#nav h1 a{
-	padding-bottom:40px !important;
-}

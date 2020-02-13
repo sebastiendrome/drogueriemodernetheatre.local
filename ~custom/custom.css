@@ -1,0 +1,21 @@
+@charset "UTF-8";
+
+#nav h1 a{
+	color: rgba(0, 0, 0, 0);
+	padding-bottom:80px !important;
+}
+#nav{
+	background-image:url(/~content/~uploads/droguerie/logo-2.png);
+	background-repeat:no-repeat;
+	background-position: top left;
+	background-size: contain;
+}
+
+#content p.description{margin:6px 0 14px 0;}
+.divItem{margin:12px 0;}
+.title a span{font-size:smaller;}
+div.gallery{background-color:#eee;}
+div.title, div.backTitle, div.placeHolderTitle{padding-bottom:0;}
+
+#content{margin-left:34%;}
+#nav ul li h1{font-size:1.5em;}

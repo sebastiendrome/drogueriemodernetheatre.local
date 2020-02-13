@@ -8,12 +8,12 @@ body, td, th, select, input, button, textarea{font-size:110%;}
 	overflow:hidden;
 }
 
+#nav ul{margin-top: 0;}
 #nav ul li{float:none; display:block;}
 #nav ul li h1{margin-bottom:20px;}
-#nav ul li a{padding-left:0;}
+#nav ul li a, #nav ul li h1 a{padding-left:0;}
 #nav ul li.lastLi{position:relative; float:right;}
 #nav ul li.lastLi a{opacity:1;}
-
 
 .backTitle, .title{padding-left:10px;}
 .backTitle h2{margin:0;}
@@ -35,3 +35,6 @@ body, td, th, select, input, button, textarea{font-size:110%;}
 div.gallery a.prev{left:0;}
 div.gallery a.next{right:0;}
 div.gallery a.prev span, div.gallery a.next span{display:none;}
+
+.wysiwyg-float-right, .wysiwyg-float-left{float:none; text-align:center; margin:0; max-width: none;}
+.wysiwyg-width-half{width: auto;}

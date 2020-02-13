@@ -260,6 +260,10 @@ div.third{width:32%;clear:both;}
 div.twothird{width:64%;}
 div.quart{width:48%;}
 div.third p.note, div.third p.error, div.third p.success{padding-right:35px; font-size:smaller;} 
+a.homeBgOption{display:inline-block; text-align:center; width: calc(50% - 10px); padding-left:5px; border:1px solid #ccc; border-radius:3px; color:#444; background-color:#fff;}
+a.homeBgOption span{visibility:hidden;}
+a.homeBgOption.bgSelected{border-color:#000; color:#000; background-color:#eee;}
+a.homeBgOption.bgSelected span{visibility:visible;}
 </style>
 
 <!-- load responsive design style sheets -->
@@ -404,14 +408,29 @@ div.third p.note, div.third p.error, div.third p.success{padding-right:35px; fon
 		<div style="max-width: 650px; min-width: 380px; padding:10px;">
 
 		<div class="third" style="text-align:right;">
-			<?php echo $ui['homeBg']; ?>:
-			<?php
+			<?php 
+			$sel_checkimage = $sel_checkslides = '';
+			$slides_file = ROOT.CONTENT.'home-slides.txt';
+			echo $ui['homeBg'].':';
+
 			// get bg image dimensions
 			if( isset($home_image) ){
 				$xl_img = ROOT.CONTENT.UPLOADS.'_XL/'.$home_image;
 				list($w, $h) = getimagesize($xl_img);
-				echo '<p>
-				<span class="tip" data-tip="'.$ui['viewSite'].'"><a href="/'.DEMO.'?v=678" class="openNew" target="_tab">&nbsp;</a></span></p>';
+				$sel_checkimage = ' bgSelected';
+				//echo '<!--<p><span class="tip" data-tip="'.$ui['viewSite'].'"><a href="/'.DEMO.'?v=678" class="openNew" target="_tab">&nbsp;</a></span></p>-->';
+			}elseif( file_exists($slides_file) ){
+				$sel_checkslides = ' bgSelected';
+				$handle = @fopen($slides_file, 'r');
+				if($handle){
+					// on success, set $slides array
+					$home_slides = array();
+					while( ($line = fgets($handle, 400) ) !== false){
+						// process the line read.
+						$home_slides[] = trim($line); // trim line in case line-break is included
+					}
+					fclose($handle);
+				}
 			}
 
 			if( isset($upload_result) ){
@@ -448,8 +467,12 @@ div.third p.note, div.third p.error, div.third p.success{padding-right:35px; fon
 			?>
 			</div>
 
-			<div class="twothird" style="position:relative;">
+			<div class="twothird">
 			<?php
+			echo '<!--<a href="javascript:;" class="homeBgOption'.$sel_checkimage.'"><span class="checkmark green">&nbsp;</span>&nbsp;&nbsp;&nbsp;Single image&nbsp;&nbsp;&nbsp;</a>
+			<a href="javascript:;" class="homeBgOption'.$sel_checkslides.'"><span class="checkmark green">&nbsp;</span>&nbsp;&nbsp;&nbsp;Slide-show&nbsp;&nbsp;&nbsp;</a>
+			<div class="clearBoth" style="margin-bottom:10px;"></div>-->';
+			echo '<div id="bgContainer" style="position:relative;">';
 			// home image is set, show it with 'change' button
 			if( isset($home_image) ){
 				echo '<div style="position:absolute; top:20px; right:20px;">
@@ -464,6 +487,7 @@ div.third p.note, div.third p.error, div.third p.success{padding-right:35px; fon
 				echo '<a href="javascript:;" class="button submit showModal left" rel="newFile?path=~uploads%2F_M%2F&replace='.BG.'.jpg&context=home_bg_img">'.$ui['uploadImage'].'</a>';
 			}
 			?>
+			</div>
 			</div>
 		</div>
 		
@@ -668,7 +692,7 @@ div.third p.note, div.third p.error, div.third p.success{padding-right:35px; fon
 
 </div><!-- end adminContainer -->
 
-<?php if( $_SESSION['gribouilli'] == $brillant ){ ?>
+<?php if( $_SESSION['gribouilli'] == $brillant ){ /* link to authorize/de-authorize a KYM download. Only if logged-in as master */ ?>
 <div id="backToTop" style="height:10px; text-align:center; overflow:hidden; opacity:0;">
 <a href="#">oui</a> <a href="#">non</a>
 </div>
@@ -750,6 +774,13 @@ function updateFont(val, target){
 }
 
 // 
+$('a.homeBgOption').on('click', function(e){
+	e.preventDefault();
+	$('a.homeBgOption').removeClass('bgSelected');
+	$(this).addClass('bgSelected');
+});
+
+// navigation options
 $('select[name="css"]').on('change', function(){
 	if($(this).val() == 'nav-top'){
 		$('div#subSectionOptions').hide();

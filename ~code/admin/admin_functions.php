@@ -844,6 +844,22 @@ function is_file_used($file_name){
 	if( strstr($menu, "\t".$file_name) ){
 		return true;
 	}else{
+
+		// match home-slides
+		// look for home-slides file, published or hidden
+		if( file_exists(ROOT.CONTENT.'home-slides.txt') ){
+			$slides_file = ROOT.CONTENT.'home-slides.txt';
+		}elseif( file_exists(ROOT.CONTENT.'_home-slides.txt') ){
+			$slides_file = ROOT.CONTENT.'_home-slides.txt';
+		}
+		// if home-slides files exists, look for file_name 
+		if( isset($slides_file) ){
+			$slides_content = file_get_contents($slides_file);
+			if( strstr($slides_content, $file_name) ){
+				return true;
+			}
+		}
+
 		// match all .gal files in menu
 		preg_match_all('/\t.*?\.gal\n/', $menu, $matches);
 		// loop through the matches and get each gallery content, to look for a match with file_name
@@ -864,7 +880,7 @@ function is_file_used($file_name){
 		if( !empty($match) ){
 			foreach($match as $k => $v){
 				$contents = file_get_contents( ROOT.CONTENT.UPLOADS.'_XL/'.trim($v) );
-				if( strstr($contents, '/'.$file_name.'">') ){
+				if( strstr($contents, '/'.$file_name) ){
 					return true;
 				}
 			}

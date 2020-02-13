@@ -128,8 +128,8 @@ function display_content_array($path, $menu_array = ''){
 				$subsection_title = trim($split[1]);
 			}
 			
-			$back_title = '<div class="backTitle uniBg"><h2>'.$subsection_title.'</h2></div>
-			<!-- <div class="title"><h2>&nbsp;</h2></div> -->'.PHP_EOL;
+			$back_title = '<div class="backTitle uniBg"><span class="back"><a href="javascript:history.go(-1);">← '.BACK.'</a> &nbsp;|&nbsp; </span>'.$subsection_title.'</div>
+			<div class="placeHolderTitle">&nbsp;</div>'.PHP_EOL;
 			
 		}
 		
@@ -207,7 +207,7 @@ function display_content_array($path, $menu_array = ''){
 						unset($back_title);
 					}
 					
-					$display .= '<div class="title"><h2>'.$sec_name.' <a href="/'.LANG_LINK.$path.'/'.$sec_dir.'/" class="aMore"><span>&nbsp;&rarr; '.MORE.'</span></a></h2></div>';
+					$display .= '<div class="title"><a href="/'.DEMO.LANG_LINK.$path.'/'.$sec_dir.'/">'.$sec_name.'&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;<span class="more">&rarr; '.MORE.'</span></a></div>';
 					
 					// if optional 3rd var is TRUE, display file without enclosing <a> tag.
 					$display_file = display_file($k, TRUE);
@@ -323,9 +323,11 @@ function display_file($file_name, $raw = FALSE){
 				$contents = file_get_contents(ROOT.$item);
 			}
 			// responsive code for images inserted in article should adpat to width limit (set in first_include, depending on nav-left or nav-top)
+			
 			if(L_W_LIMIT !== 1370){
 				$contents = str_replace('="(max-width: 1370px', '="(max-width: '.L_W_LIMIT.'px', $contents);
 			}
+			
 			// apply styles to entire text item, by parsing style comment
 			if( preg_match('/<!-- qQqStyleqQq-.*? -->/', $contents, $matches) ){
 				$item_style_string = str_replace(array('<!-- qQqStyleqQq-', ' -->'),'', $matches[0]);
@@ -445,12 +447,22 @@ function my_br2nl($content){
 function filename($string, $de_encode){
 	$char = array
 	(
+		' ', '/',   '\\',  '(',   ')',   '[',   ']',   '{',   '}',   '|',   '<',  '>',  '*',   '#',   '%',   '&',  '$',   '€',    '@',   '+',   '!',   '?',  ',',  '.',  ';',   ':',   '"',   '«',    '»',    "'",   '‘',    '’',    '“',   '”',   '‛',    '‟',   '′',   '″',    '©',   '®',    'ç',   'Ç',    'à',   'á',   'â',   'ã',   'ä',   'Ä',   'À',    'Ö',   'Ü',   'Ë',     'ß',   'ñ',    '¿',    'è',   'é',   'ê',   'ë',   'ì',   'í',   'î',   'ĩ',   'ï',   'ò',   'ó',   'ô',   'õ',   'ö',   'ù',   'ú',   'ü',   'û',   'Â',    'Ô',    'Û',    'Ê',    'É',   'È',    'Î'
+	);
+	$rep =  array
+	(
+		'qZ','zFSz','zBSz','zOPz','zCPz','zOBz','zCBz','zOAz','zCAz','zVLz','zPz','zNz','zSRz','zPDz','zPTz','zAz','zDRz','zERz', 'zATz','zPSz','zEPz','zQz','zCz','zDz','zSCz','zCNz','zQTz','zqOz', 'zqCz', 'zSQz','zSQDz','zSQUz','zQDz','zQUz','zSQFz','zQFz','zAFz','zDAFz','zCYz','zRYz', 'qCCq','QCCQ', 'qAGq','qAAq','qACq','qATq','qADq','QADQ','QAGQ', 'QODQ','QUDQ','QEdq ', 'qSSq','qnvQ', 'qQuQ', 'qEGq','qEAq','qECq','qEDq','qIGq','qIAq','qICq','qITq','qIDq','qOGq','qOAq','qOCq','qOTq','qODq','qUGq','qUAq','qUCq','qUDq','qACQ', 'qOCQ', 'qUCQ', 'qECQ', 'qEeQ','qEgQ', 'qICQ'
+	);
+	/*
+	$char = array
+	(
 		' ', '/', '\\', '(', ')', '[', ']', '{', '}', '|', '<', '>', '*', '#', '%', '&', '$', '@', '+', '!', '?', ',', '.', ';', ':', '"', "'", '‘', '’', '“', '”', '‛', '‟', '′', '″', '©', 'ç', 'à', 'á', 'â', 'ã', 'ä', 'Ä', 'Ö', 'Ü', 'ß', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ĩ', 'ï', 'ò', 'ó', 'ô', 'õ', 'ö', 'ù', 'ú', 'ü', 'û','Â', 'Ô', 'Û', 'Ê', 'É', 'Î'
 	);
 	$rep =  array
 	(
 		'qZ','zFSz','zBSz','zOPz','zCPz','zOBz','zCBz','zOAz','zCAz','zVLz','zPz','zNz','zSRz','zPDz','zPTz','zAz','zDRz','zATz','zPSz','zEPz','zQz','zCz','zDz','zSCz','zCNz','zQTz','zSQz','zSQDz','zSQUz','zQDz','zQUz','zSQFz','zQFz','zAFz','zDAFz','zCYz','qCCq','qAGq','qAAq','qACq','qATq','qADq','QADQ','QODQ','QUDQ','qSSq','qEGq','qEAq','qECq','qEDq','qIGq','qIAq','qICq','qITq','qIDq','qOGq','qOAq','qOCq','qOTq','qODq','qUGq','qUAq','qUCq','qUDq','qACQ', 'qOCQ', 'qUCQ', 'qECQ', 'qEeQ', 'qICQ'
 	);
+	*/
 	if($de_encode == 'encode'){
 		foreach($char as $key => $value){
 			$string = str_replace($value, $rep[$key], $string);

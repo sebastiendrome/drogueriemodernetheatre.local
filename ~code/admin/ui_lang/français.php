@@ -128,7 +128,7 @@ $ui = array(
     'navOptLeft' => 'à gauche de la page',
     'navOptTop' => 'en haut de page',
     'navShowsSub' => 'Navigation montre les sous-sections',
-    'homeBg' => 'Image de fond de la page d\'accueil',
+    'homeBg' => 'Fond d\'écran de la page d\'accueil',
     'siteBgColor' => 'Couleur de fond du site',
     'itemsBgColor' => 'Couleur de fond des articles',
     'headerFont' => 'Police des en-têtes',
@@ -206,7 +206,7 @@ $ui = array(
 	'orderMessage' => 'Merci pour votre commande, [%rep1%]. <br>Je vais vous répondre au plus vite! <br>Si vous préférez me joindre directement, vous pouvez m\'appeler au: [%rep2%]<br><br> - Seb de Die, le web master.',
 	'welcome' => '<h2><i>Bienvenue</i></h2>
 	<p>Pour commencer, cliquez sur "<span class="add">nouvelle section</span>" ci-dessus, pour créer une section (ou "page"), dans laquelle vous pourrez transférer ou créer du contenu. Les sections du site seront listées ici, ainsi que leur contenu, et vous pourrez tout modifier en quelques clics...</p>
-	<p>En haut à droite, le lien "<span class="fav">paramètres</span>" vous permettra de personnaliser l\'apparence de votre site, ainsi que son titre, ses langues, et autres informations importantes.</p>
+	<p>En haut à droite, le lien "Paramètres" vous permettra de personnaliser l\'apparence de votre site, ainsi que son titre, ses langues, et autres informations importantes.</p>
 	<p>Amusez-vous bien. <br>
 	N\'ayez pas peur de cliquer sur tout. C\'est comme ça qu\'on apprend.</p>
 	<p style="font-size:smaller;"><i>P.S. Ce message va s\'auto-détruire très bientôt.</i></p>'

@@ -29,14 +29,5 @@ div.gallery a.prev{left:0;}
 div.gallery a.next{right:0;}
 div.gallery a.prev span, div.gallery a.next span{display:none;}
 
-/********** droguerie custom **********/
-#nav h1 a{
-	color: initial;
-	padding-bottom:0 !important;
-}
-#nav{
-	background-image:none;
-}
-
-
-
+.wysiwyg-float-right, .wysiwyg-float-left{float:none; text-align:center; margin:0; max-width: none;}
+.wysiwyg-width-half{width: auto;}

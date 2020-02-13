@@ -11,9 +11,10 @@
  * all user actions results displayed in #done div via ajax
  */
 session_start();
+ini_set("auto_detect_line_endings", true);
 
 // set version, to load fresh css and js
-$version = 4;
+$version = 5;
 
 // Protocol: http vs https
 $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
@@ -30,7 +31,8 @@ $demo = preg_replace('/~code\/.*$/', '', str_replace(ROOT, '', __FILE__));
 define("DEMO", $demo);
 
 // reference to site author...
-define("AUTHOR_REF", 'sebdedie@gmail.com');
+define("AUTHOR_REF", '<a href="https://killyourmaster.net" target="_blank" title="build your website fast and easy.">site powered by KYM</a>');
+define("AUTHOR_EMAIL", 'kym.killyourmaster@gmail.com');
 // content directory (which contains all user files)
 define("CONTENT", DEMO.'~content/');
 // upload directory (which contains all user uploaded files)
@@ -44,7 +46,7 @@ if( strstr(SITE,'.local') ){ 					// local server
 	define( 'LOG_ERRORS', TRUE );
 }else{ 											// remote server
 	ini_set('display_errors', 0);
-	define("SEND_ERRORS_TO", AUTHOR_REF);
+	define("SEND_ERRORS_TO", AUTHOR_EMAIL);
 	define( 'DISPLAY_DEBUG', FALSE );
 	define( 'LOG_ERRORS', TRUE );
 }
@@ -239,25 +241,16 @@ if(isset($_COOKIE['wW'])){
 define("SIZE", $size);
 define("L_W_LIMIT", $large_w_limit);
 
-// home page background image
+// define home page background image name
 define("BG", 'home_bg_6Fg7M-do8');
-if( file_exists( ROOT.CONTENT.UPLOADS.SIZE.'/'.BG.'.jpg') ){
+// check if it exists in any format, if yes, set $home_image
+if( file_exists( ROOT.CONTENT.UPLOADS.'_L/'.BG.'.jpg') ){
 	$home_image = BG.'.jpg';
-}elseif( file_exists( ROOT.CONTENT.UPLOADS.SIZE.'/'.BG.'.gif') ){
+}elseif( file_exists( ROOT.CONTENT.UPLOADS.'_L/'.BG.'.gif') ){
 	$home_image = BG.'.gif';
-}elseif( file_exists( ROOT.CONTENT.UPLOADS.SIZE.'/'.BG.'.png') ){
+}elseif( file_exists( ROOT.CONTENT.UPLOADS.'_L/'.BG.'.png') ){
 	$home_image = BG.'.png';
 }
-// setup bg image if it does not exists
-/*
-if( !isset($home_image) ){
-	copy(ROOT.DEMO.'~code/templates/_XL/'.BG.'.jpg', ROOT.CONTENT.UPLOADS.'_XL/'.BG.'.jpg');
-	copy(ROOT.DEMO.'~code/templates/_L/'.BG.'.jpg', ROOT.CONTENT.UPLOADS.'_L/'.BG.'.jpg');
-	copy(ROOT.DEMO.'~code/templates/_M/'.BG.'.jpg', ROOT.CONTENT.UPLOADS.'_M/'.BG.'.jpg');
-	copy(ROOT.DEMO.'~code/templates/_S/'.BG.'.jpg', ROOT.CONTENT.UPLOADS.'_S/'.BG.'.jpg');
-	$home_image = BG.'.jpg';
-}
-*/
 
 // require common functions
 require(ROOT.DEMO.'~code/inc/functions.php');

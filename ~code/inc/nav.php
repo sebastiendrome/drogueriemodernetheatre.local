@@ -81,17 +81,26 @@ if(BILINGUAL == 'yes'){
 	$lang_nav = '';
 }
 
-// main link to home page
+// main link to home page, and SEO title description for home link
 if(empty(LANG_LINK)){
 	$home_link = '/'.DEMO;
+	$home_descripton = $seo_title_en;
 }else{
 	$home_link = '/'.DEMO.LANG_LINK;
+	$home_descripton = $seo_title_de;
+}
+// custom logo if it exists
+$custom_logo = ROOT.DEMO.'~custom/logo.html';
+if( file_exists($custom_logo) ){
+	$display_title = file_get_contents($custom_logo);
+}else{
+	$display_title = USER;
 }
 ?>
 <!-- start nav -->
 <div id="nav" class="uniBg">
     <ul>
-        <li><h1><a href="<?php echo $home_link; ?>" title="<?php echo USER; ?>"><?php echo USER; ?></a></h1></li>
+        <li id="logoNav"><h1><a href="<?php echo $home_link; ?>" title="<?php echo $home_descripton; ?>"><?php echo $display_title; ?></a></h1></li>
 		<?php 
 		echo $nav;
 		echo $lang_nav;

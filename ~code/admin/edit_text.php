@@ -212,6 +212,9 @@ if( !empty($goog_content) ){
 
 require(ROOT.DEMO.'~code/inc/doctype.php');
 
+// adjust div#content width to account for editor padding(10px) and border (1px)
+$content_width_adjusted = $_POST['sizes'][substr(SIZE,1)]['width']+22;
+
 ?>
 
 <!-- ensure the css styles here are the nav-left ones for narrow windows! -->
@@ -229,6 +232,7 @@ require(ROOT.DEMO.'~code/inc/doctype.php');
 
 <style type="text/css">
 body{padding-top:0;}
+#content{max-width:<?php echo $content_width_adjusted; ?>px;}
 </style>
 
 <script src="/<?php echo DEMO; ?>~code/admin/wysihtml-0.5.5/dist/wysihtml-toolbar.min.js"></script>
@@ -306,6 +310,22 @@ body{padding-top:0;}
 
 		<div id="workflow">
 			<a data-wysihtml5-command="undo" href="javascript:;" unselectable="on" title="Undo">undo</a><a data-wysihtml5-command="redo" href="javascript:;" unselectable="on" title="Redo">redo</a><a data-wysihtml5-action="change_view" title="<?php echo $ui['showCode']; ?>" class="" onclick="if(this.className == ''){this.className = 'wysihtml5-command-active'}else{this.className = ''}">&lt; / ></a>
+		</div>
+
+
+		
+		<!-- dialog divs -->
+
+		<div class="dialogDiv" id="floatImage" style="display:none; text-align:center; left:40%;">
+		<a class="closeBut">&times;</a>
+		<p><span class="below" style="color:#000;">Image position</span><br>
+		<a data-wysihtml5-command="floatLeft" title="<?php echo $ui['alignLeft']; ?>" unselectable="on" style="padding-top:5px;">
+		<span style="float:left; margin-right:2px; display: inline-block; background-color:#fff; border:1px solid #000; width:10px; height:12px; background-image:url(/~code/admin/images/insert-image.gif);"></span>
+		<img src="/<?php echo DEMO; ?>~code/admin/images/align-left.gif" style="width:13px; height:12px; vertical-align:top;"></a> 
+		<a data-wysihtml5-command="floatRight" title="<?php echo $ui['alignRight']; ?>" unselectable="on" style="padding-top:5px;">
+		<span style="float:right; margin-left:2px; display: inline-block; background-color:#fff; border:1px solid #000; width:10px; height:12px; background-image:url(/~code/admin/images/insert-image.gif);"></span>
+		<img src="/<?php echo DEMO; ?>~code/admin/images/align-left.gif" style="width:13px; height:12px; vertical-align:top;"></a></p>
+		<!--<p><a data-wysihtml5-command="widthHalfClass">width 50%</a></p>-->
 		</div>
 
 		<div data-wysihtml5-dialog="foreColorStyle" class="dialogDiv" id="tColorModal" style="display:none;">
@@ -618,6 +638,20 @@ $(document).ready(function(){
 	$('body').on('keyup', 'div#editor, textarea.wysihtml5-source-view', function(){
 		formmodified = 1;
 		warn();
+	});
+
+	// show image float left-right-none dialog when image is clicked, if image is less wide than content
+	$('body').on('click', 'div#editor img', function(){
+		var imgW = $(this).width();
+		var editorW = $('div#editor').width();
+		//alert(imgW+' - '+editorW);
+		if(editorW > imgW){
+			$('div#floatImage').show();
+		}
+	});
+	// hide the image float dialog if anything else than an image is clicked within editor
+	$('div#editor').not('img').click(function() {
+		$('div#floatImage').hide();
 	});
 
 	$('a#articleColors').on('click', function(){

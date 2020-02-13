@@ -132,7 +132,7 @@ $ui = array(
     'navOptLeft' => 'left of page',
     'navOptTop' => 'top of page',
     'navShowsSub' => 'Navigation shows sub-sections',
-    'homeBg' => 'Home page background image',
+    'homeBg' => 'Homepage background',
     'siteBgColor' => 'Site background color',
     'itemsBgColor' => 'Items background color',
     'headerFont' => 'Header font',
@@ -211,7 +211,7 @@ $ui = array(
 	'orderMessage' => 'Thank you for your order, [%rep1%]. <br>I\'ll get back to you as soon as possible!<br>If you\'d like to talk directly, you can call me at: [%rep2%]<br><br> - Seb de Die, the web master.',
 	'welcome' => '<h2><i>Welcome</i></h2>
 	<p>To get started, click "<span class="add">new section</span>" above. This will create a section (or "page") in your site, in which you\'ll be able to upload or create content. Sections will then be listed here, with their content, all editable in a few clicks...</p>
-	<p>On the top right, you can see a link to "<span class="fav">settings"</span>, where you\'ll be able to customize the look of your site, set its title, its language(s) and more.</p>
+	<p>On the top right, you can see a link to "Settings", where you\'ll be able to customize the look of your site, set its title, its language(s) and more.</p>
 	<p>Have fun. <br>
 	Don\'t be afraid to click on everything. That\'s how you\'ll learn.</p>
 	<p style="font-size:smaller;"><i>P.S. This message will auto-destroy pretty soon.</i></p>'
